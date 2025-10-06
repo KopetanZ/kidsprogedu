@@ -51,7 +51,7 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
   },
   run() {
     const lesson = get().lesson;
-    if (!lesson) return;
+    if (!lesson) return false;
     const program: Block[] = [{ block: 'when_flag' }, ...get().program.filter((b) => b.block !== 'when_flag')];
     const r = new Runtime({ goal: lesson.goal });
     r.load(program);

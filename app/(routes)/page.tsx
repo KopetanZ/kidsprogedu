@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Button from '../../components/Button';
-import voice from '../../../content/voice/ja.json';
+import Button from '../components/Button';
+import voice from '../../content/voice/ja.json';
 
 export default function HomePage() {
   return (
@@ -18,4 +18,3 @@ export default function HomePage() {
     </main>
   );
 }
-

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo } from 'react';
+import { Suspense, useEffect, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import TopBar from '../../components/TopBar';
 import Button from '../../components/Button';
@@ -21,7 +21,7 @@ const moveBlocks: Block[] = [
   { block: 'play_sound' },
 ];
 
-export default function EditorPage() {
+function EditorInner() {
   const params = useSearchParams();
   const router = useRouter();
   const lessonId = params.get('lessonId') ?? 'L1_01_go_right';
@@ -106,6 +106,14 @@ export default function EditorPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function EditorPage() {
+  return (
+    <Suspense fallback={null}>
+      <EditorInner />
+    </Suspense>
   );
 }
 

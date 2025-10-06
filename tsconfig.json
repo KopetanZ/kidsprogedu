@@ -1,16 +1,52 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM"],
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
-    "paths": { "@core/*": ["core/*"], "@app/*": ["app/*"], "@content/*": ["content/*"] },
-    "resolveJsonModule": true
+    "paths": {
+      "@core/*": [
+        "core/*"
+      ],
+      "@app/*": [
+        "app/*"
+      ],
+      "@content/*": [
+        "content/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["app", "core", "content", "scripts", "test", "docs"],
-  "exclude": ["node_modules", "out", ".next"]
+  "include": [
+    "app",
+    "content",
+    "core",
+    "docs",
+    "scripts",
+    "test",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "out",
+    ".next"
+  ]
 }

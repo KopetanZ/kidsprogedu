@@ -71,7 +71,7 @@ export class VM {
         break;
       }
 
-      const frame = this.state.frames[this.state.frames.length - 1];
+      const frame = this.state.frames[this.state.frames.length - 1]!;
       if (frame.kind === 'seq') {
         const node = frame.nodes[frame.index];
         if (!node) {
@@ -165,4 +165,3 @@ export class VM {
     }
   }
 }
-

@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 import { readFileSync } from 'node:fs';
-import { LessonSchema, checkBlockDepth } from '../core/blocks/schemas.ts';
+import { LessonSchema, checkBlockDepth } from '../core/blocks/schemas';
 
 function lintOne(path: string) {
   try {
