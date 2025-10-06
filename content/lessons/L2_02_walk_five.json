@@ -1,0 +1,15 @@
+{
+  "id": "L2_02_walk_five",
+  "title": "みぎへ 5かい あるこう",
+  "goal": { "type": "reach", "x": 6, "y": 1 },
+  "toolbox": ["when_flag", "move_right", "repeat_n"],
+  "hints": [
+    "みぎへ 1を 5かい でも いいし",
+    "くりかえしで まとめても いいよ"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
+}
+

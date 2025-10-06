@@ -1,0 +1,15 @@
+{
+  "id": "L3_01_when_flag",
+  "title": "はたが おされたら",
+  "goal": { "type": "reach", "x": 4, "y": 1 },
+  "toolbox": ["when_flag", "move_right"],
+  "hints": [
+    "はたを おして みぎへ すすめよう",
+    "みどりの ぼたんで じっこう"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 8, "allowLinearSolution": true }
+}
+

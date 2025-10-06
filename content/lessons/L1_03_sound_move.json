@@ -1,0 +1,15 @@
+{
+  "id": "L1_03_sound_move",
+  "title": "おとを ならそう",
+  "goal": { "type": "reach", "x": 3, "y": 1 },
+  "toolbox": ["when_flag", "move_right", "play_sound"],
+  "hints": [
+    "みぎへ 2かい うごいたら おとを ならしてみよう",
+    "さいごに みどりの ぼたんを おすよ"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 10, "allowLinearSolution": true }
+}
+

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": { "@core/*": ["core/*"], "@app/*": ["app/*"], "@content/*": ["content/*"] },
+    "resolveJsonModule": true
+  },
+  "include": ["app", "core", "content", "scripts", "test", "docs"],
+  "exclude": ["node_modules", "out", ".next"]
+}

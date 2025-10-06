@@ -1,0 +1,15 @@
+{
+  "id": "L1_01_go_right",
+  "title": "みぎへ いこう",
+  "goal": { "type": "reach", "x": 4, "y": 1 },
+  "toolbox": ["when_flag", "move_right", "play_sound"],
+  "hints": [
+    "みぎの ぶろっくを 3こ おいて ためしてみよう",
+    "みどりの ぼたんを おしてね"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 8, "allowLinearSolution": true }
+}
+

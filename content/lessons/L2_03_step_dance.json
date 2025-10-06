@@ -1,0 +1,15 @@
+{
+  "id": "L2_03_step_dance",
+  "title": "すてっぷで おどろう",
+  "goal": { "type": "reach", "x": 3, "y": 2 },
+  "toolbox": ["when_flag", "move_right", "move_down", "move_up", "repeat_n"],
+  "hints": [
+    "みぎ → した → うえ を くりかえしてみよう",
+    "おなじ なら くりかえしも つかえるよ"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
+}
+
