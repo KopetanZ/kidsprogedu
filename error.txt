@@ -1,0 +1,44 @@
+02:00:05.555 
+npm error code ERESOLVE
+02:00:05.556 
+npm error ERESOLVE unable to resolve dependency tree
+02:00:05.556 
+npm error
+02:00:05.557 
+npm error While resolving: kidsprogedu@0.1.0
+02:00:05.557 
+npm error Found: eslint@9.37.0
+02:00:05.557 
+npm error node_modules/eslint
+02:00:05.557 
+npm error   dev eslint@"^9.9.0" from the root project
+02:00:05.558 
+npm error
+02:00:05.558 
+npm error Could not resolve dependency:
+02:00:05.558 
+npm error peer eslint@"^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0" from eslint-plugin-react-hooks@4.6.2
+02:00:05.558 
+npm error node_modules/eslint-plugin-react-hooks
+02:00:05.558 
+npm error   dev eslint-plugin-react-hooks@"^4.6.2" from the root project
+02:00:05.558 
+npm error
+02:00:05.559 
+npm error Fix the upstream dependency conflict, or retry
+02:00:05.559 
+npm error this command with --force or --legacy-peer-deps
+02:00:05.559 
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+02:00:05.559 
+npm error
+02:00:05.559 
+npm error
+02:00:05.559 
+npm error For a full report see:
+02:00:05.559 
+npm error /vercel/.npm/_logs/2025-10-06T17_00_03_519Z-eresolve-report.txt
+02:00:05.559 
+npm error A complete log of this run can be found in: /vercel/.npm/_logs/2025-10-06T17_00_03_519Z-debug-0.log
+02:00:05.593 
+Error: Command "npm install" exited with 1
