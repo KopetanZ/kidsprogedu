@@ -1,0 +1,27 @@
+{
+  "id": "L2_04_ladder_climb",
+  "title": "はしごを のぼろう",
+  "goal": {
+    "type": "reach",
+    "x": 1,
+    "y": 5
+  },
+  "toolbox": [
+    "when_flag",
+    "move_up",
+    "repeat_n"
+  ],
+  "hints": [
+    "うえへ なんかい いけば いいかな？",
+    "くりかえしを つかうと かんたんだよ"
+  ],
+  "starterCode": [
+    {
+      "block": "when_flag"
+    }
+  ],
+  "accept": {
+    "maxBlocks": 10,
+    "allowLinearSolution": true
+  }
+}

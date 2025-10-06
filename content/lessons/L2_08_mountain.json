@@ -1,0 +1,13 @@
+{
+  "id": "L2_08_mountain",
+  "title": "やまを のぼって おりよう",
+  "description": "くりかえしで やまを のぼって おりてみよう",
+  "difficulty": 2,
+  "goal": { "x": 6, "y": 1 },
+  "toolbox": ["move_right", "move_up", "move_down", "repeat_n"],
+  "starterCode": [],
+  "hints": {
+    "start": "のぼりと くだりを くりかえしで つくろう",
+    "stuck": "くりかえし3で みぎ うえ、それから くりかえし3で みぎ した だよ"
+  }
+}

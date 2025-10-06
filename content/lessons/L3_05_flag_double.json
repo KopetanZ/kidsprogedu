@@ -1,0 +1,13 @@
+{
+  "id": "L3_05_flag_double",
+  "title": "はたを 2かい おそう",
+  "description": "when_flagを つかって はたを 2かい クリックしてね",
+  "difficulty": 3,
+  "goal": { "x": 2, "y": 1 },
+  "toolbox": ["move_right", "when_flag"],
+  "starterCode": [],
+  "hints": {
+    "start": "はたブロックを つかうと クリックした かずだけ うごくよ",
+    "stuck": "みぎ1の ブロックを はたブロックに つけて 2かい おしてね"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "L4_02_mini_game",
+  "title": "ちいさな げーむを つくろう",
+  "goal": {
+    "type": "reach",
+    "x": 8,
+    "y": 5
+  },
+  "toolbox": [
+    "when_flag",
+    "move_right",
+    "move_left",
+    "move_up",
+    "move_down",
+    "play_sound",
+    "repeat_n"
+  ],
+  "hints": [
+    "ゴールまで いく みちを かんがえよう",
+    "くりかえしを つかうと かんたんだよ",
+    "じぶんだけの げーむを つくってみよう！"
+  ],
+  "starterCode": [
+    {
+      "block": "when_flag"
+    }
+  ],
+  "accept": {
+    "maxBlocks": 25,
+    "allowLinearSolution": true
+  }
+}

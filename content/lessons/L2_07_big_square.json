@@ -1,0 +1,13 @@
+{
+  "id": "L2_07_big_square",
+  "title": "おおきな しかくを かこう",
+  "description": "くりかえしを つかって おおきな しかくを かこう",
+  "difficulty": 2,
+  "goal": { "x": 1, "y": 1 },
+  "toolbox": ["move_right", "move_up", "move_left", "move_down", "repeat_n"],
+  "starterCode": [],
+  "hints": {
+    "start": "4つの ほうこうを それぞれ くりかえし で かこう",
+    "stuck": "くりかえし5で みぎ→うえ→ひだり→した を いれてみよう"
+  }
+}

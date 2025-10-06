@@ -1,0 +1,13 @@
+{
+  "id": "L2_06_spiral",
+  "title": "らせんで すすもう",
+  "description": "くりかえしを つかって らせんじょうに すすもう",
+  "difficulty": 2,
+  "goal": { "x": 5, "y": 4 },
+  "toolbox": ["move_right", "move_up", "repeat_n"],
+  "starterCode": [],
+  "hints": {
+    "start": "みぎと うえを くりかえして つかうと らせんに なるよ",
+    "stuck": "くりかえし3で みぎ うえ みぎ うえ みぎ うえ が できるよ"
+  }
+}

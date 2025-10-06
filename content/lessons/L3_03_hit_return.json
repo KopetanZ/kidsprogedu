@@ -1,0 +1,28 @@
+{
+  "id": "L3_03_hit_return",
+  "title": "ぶつかったら もどる",
+  "goal": {
+    "type": "reach",
+    "x": 5,
+    "y": 3
+  },
+  "toolbox": [
+    "when_flag",
+    "move_right",
+    "move_up",
+    "move_down"
+  ],
+  "hints": [
+    "みちを たどって すすもう",
+    "うえと みぎを つかってみよう"
+  ],
+  "starterCode": [
+    {
+      "block": "when_flag"
+    }
+  ],
+  "accept": {
+    "maxBlocks": 15,
+    "allowLinearSolution": true
+  }
+}

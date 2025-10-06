@@ -1,0 +1,13 @@
+{
+  "id": "L3_06_flag_pattern",
+  "title": "はたで パターンを つくろう",
+  "description": "はたを おして みぎと うえの パターンを つくろう",
+  "difficulty": 3,
+  "goal": { "x": 3, "y": 2 },
+  "toolbox": ["move_right", "move_up", "when_flag"],
+  "starterCode": [],
+  "hints": {
+    "start": "はたを おすたびに ちがう うごきを させられるよ",
+    "stuck": "はたブロックに みぎ と うえ を いれて なんかい か おしてね"
+  }
+}

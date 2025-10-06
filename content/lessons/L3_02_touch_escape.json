@@ -1,0 +1,28 @@
+{
+  "id": "L3_02_touch_escape",
+  "title": "ふれたら にげよう",
+  "goal": {
+    "type": "reach",
+    "x": 8,
+    "y": 1
+  },
+  "toolbox": [
+    "when_flag",
+    "move_right",
+    "move_left",
+    "play_sound"
+  ],
+  "hints": [
+    "みぎへ すすんで ゴールまで いこう",
+    "おとを ならすと たのしいよ"
+  ],
+  "starterCode": [
+    {
+      "block": "when_flag"
+    }
+  ],
+  "accept": {
+    "maxBlocks": 12,
+    "allowLinearSolution": true
+  }
+}

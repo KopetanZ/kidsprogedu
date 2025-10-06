@@ -1,0 +1,30 @@
+{
+  "id": "L3_04_treasure_open",
+  "title": "たからばこを ひらく",
+  "goal": {
+    "type": "reach",
+    "x": 6,
+    "y": 3
+  },
+  "toolbox": [
+    "when_flag",
+    "move_right",
+    "move_up",
+    "play_sound",
+    "repeat_n"
+  ],
+  "hints": [
+    "たからばこは どこかな？",
+    "みぎと うえを つかってみよう",
+    "ついたら おとを ならそう！"
+  ],
+  "starterCode": [
+    {
+      "block": "when_flag"
+    }
+  ],
+  "accept": {
+    "maxBlocks": 12,
+    "allowLinearSolution": true
+  }
+}

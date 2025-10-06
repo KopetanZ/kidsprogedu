@@ -1,0 +1,13 @@
+{
+  "id": "L1_06_L_shape",
+  "title": "Lのかたちに すすもう",
+  "description": "まず みぎに いってから うえに すすんでね",
+  "difficulty": 1,
+  "goal": { "x": 4, "y": 4 },
+  "toolbox": ["move_right", "move_up"],
+  "starterCode": [],
+  "hints": {
+    "start": "さいしょに みぎに すすんで それから うえに のぼろう",
+    "stuck": "みぎを たくさん おいてから うえを おいてみてね"
+  }
+}

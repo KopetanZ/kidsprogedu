@@ -1,0 +1,32 @@
+{
+  "id": "L4_01_my_dance",
+  "title": "じぶんの ダンスを つくろう",
+  "goal": {
+    "type": "reach",
+    "x": 4,
+    "y": 3
+  },
+  "toolbox": [
+    "when_flag",
+    "move_right",
+    "move_left",
+    "move_up",
+    "move_down",
+    "play_sound",
+    "repeat_n"
+  ],
+  "hints": [
+    "すきな ように うごかしてみよう",
+    "おとも いれると たのしいよ",
+    "どんな ダンスが できるかな？"
+  ],
+  "starterCode": [
+    {
+      "block": "when_flag"
+    }
+  ],
+  "accept": {
+    "maxBlocks": 20,
+    "allowLinearSolution": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "L4_05_story",
+  "title": "おはなしを つくろう",
+  "description": "うごきと おとで じぶんだけの おはなしを つくろう",
+  "difficulty": 4,
+  "goal": { "x": 5, "y": 3 },
+  "toolbox": ["move_right", "move_up", "move_left", "move_down", "repeat_n", "play_sound", "when_flag"],
+  "starterCode": [],
+  "hints": {
+    "start": "はたと おとを つかって おはなしを つくってみよう",
+    "stuck": "どんな おはなしに したいか かんがえて じゆうに つくってね"
+  }
+}

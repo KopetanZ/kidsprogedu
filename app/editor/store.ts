@@ -14,6 +14,9 @@ type EditorState = {
   _runtime?: import('../../core/engine/runtime').Runtime;
   setLesson: (lesson: Lesson) => void;
   addBlock: (b: Block) => void;
+  addBlockToRepeat: (repeatIndex: number, child: Block) => void;
+  moveBlock: (fromIndex: number, toIndex: number) => void;
+  removeBlock: (index: number) => void;
   removeLast: () => void;
   undo: () => void;
   reset: () => void;
@@ -32,11 +35,48 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
   },
   addBlock(b) {
     const prev = get().program;
-    set({ history: [...get().history, prev], program: [...prev, b] });
+    const history = get().history;
+    // 履歴を最大5件に制限
+    const newHistory = history.length >= 5 ? [...history.slice(1), prev] : [...history, prev];
+    set({ history: newHistory, program: [...prev, b] });
+  },
+  addBlockToRepeat(repeatIndex, child) {
+    const prev = get().program;
+    const history = get().history;
+    const newHistory = history.length >= 5 ? [...history.slice(1), prev] : [...history, prev];
+    const newProgram = prev.map((block, idx) => {
+      if (idx === repeatIndex && block.block === 'repeat_n') {
+        return {
+          ...block,
+          children: [...(block.children || []), child],
+        };
+      }
+      return block;
+    });
+    set({ history: newHistory, program: newProgram });
+  },
+  moveBlock(fromIndex, toIndex) {
+    const prev = get().program;
+    const history = get().history;
+    const newHistory = history.length >= 5 ? [...history.slice(1), prev] : [...history, prev];
+    const newProgram = [...prev];
+    const [movedBlock] = newProgram.splice(fromIndex, 1);
+    newProgram.splice(toIndex, 0, movedBlock);
+    set({ history: newHistory, program: newProgram });
+  },
+  removeBlock(index) {
+    const prev = get().program;
+    const history = get().history;
+    const newHistory = history.length >= 5 ? [...history.slice(1), prev] : [...history, prev];
+    const newProgram = prev.filter((_, i) => i !== index);
+    set({ history: newHistory, program: newProgram });
   },
   removeLast() {
     const prev = get().program;
-    set({ history: [...get().history, prev], program: prev.slice(0, -1) });
+    const history = get().history;
+    // 履歴を最大5件に制限
+    const newHistory = history.length >= 5 ? [...history.slice(1), prev] : [...history, prev];
+    set({ history: newHistory, program: prev.slice(0, -1) });
   },
   undo() {
     const history = get().history.slice();

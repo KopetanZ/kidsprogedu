@@ -1,0 +1,13 @@
+{
+  "id": "L3_08_repeat_flag",
+  "title": "はたで くりかえしを つかおう",
+  "description": "はたブロックと くりかえしを くみあわせよう",
+  "difficulty": 3,
+  "goal": { "x": 4, "y": 3 },
+  "toolbox": ["move_right", "move_up", "repeat_n", "when_flag"],
+  "starterCode": [],
+  "hints": {
+    "start": "はたブロックの なかに くりかえしを いれられるよ",
+    "stuck": "はた→くりかえし3→みぎ と はた→くりかえし2→うえ を ためしてね"
+  }
+}

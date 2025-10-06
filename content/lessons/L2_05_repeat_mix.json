@@ -1,0 +1,13 @@
+{
+  "id": "L2_05_repeat_mix",
+  "title": "くりかえしを 2かい つかおう",
+  "description": "2つの くりかえしブロックを つかって ゴールを めざそう",
+  "difficulty": 2,
+  "goal": { "x": 4, "y": 3 },
+  "toolbox": ["move_right", "move_up", "repeat_n"],
+  "starterCode": [],
+  "hints": {
+    "start": "まず みぎに くりかえし、つぎに うえに くりかえし",
+    "stuck": "くりかえし2を つかって みぎ、それから くりかえし2で うえだよ"
+  }
+}

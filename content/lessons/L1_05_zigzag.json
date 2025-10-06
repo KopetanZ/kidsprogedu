@@ -1,0 +1,13 @@
+{
+  "id": "L1_05_zigzag",
+  "title": "ジグザグに すすもう",
+  "description": "みぎと うえを くみあわせて ジグザグに すすんでね",
+  "difficulty": 1,
+  "goal": { "x": 3, "y": 3 },
+  "toolbox": ["move_right", "move_up"],
+  "starterCode": [],
+  "hints": {
+    "start": "みぎと うえを こうごに つかってみよう",
+    "stuck": "みぎ うえ みぎ うえ の じゅんばんで おいてみてね"
+  }
+}

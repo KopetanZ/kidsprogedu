@@ -1,0 +1,13 @@
+{
+  "id": "L1_08_cross",
+  "title": "じゅうじに すすもう",
+  "description": "うえに いってから したに もどって ゴールに いこう",
+  "difficulty": 1,
+  "goal": { "x": 1, "y": 3 },
+  "toolbox": ["move_up", "move_down", "move_right"],
+  "starterCode": [],
+  "hints": {
+    "start": "まず うえに いって それから したに もどろう",
+    "stuck": "うえ うえ した した みぎ で いけるかな？"
+  }
+}
