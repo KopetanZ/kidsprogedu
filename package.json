@@ -13,7 +13,7 @@
     "schema:check": "tsx scripts/lintLesson.ts content/lessons/*.json"
   },
   "dependencies": {
-    "next": "^15.0.0",
+    "next": "^15.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zod": "^3.23.8",
@@ -33,5 +33,8 @@
     "tsx": "^4.20.6",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5"
+  },
+  "engines": {
+    "node": ">=18.17 <23"
   }
 }
