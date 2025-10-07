@@ -1,0 +1,34 @@
+{
+  "id": "L2_01_challenge_loop",
+  "title": "チャレンジ：くりかえしを つかおう",
+  "type": "challenge",
+  "skills": ["loop"],
+  "difficulty": 2,
+  "estimatedTimeMin": 5,
+  "subgoals": [
+    { "id": "sg1", "label": "ブロックは 3こ いかに しよう" },
+    { "id": "sg2", "label": "くりかえし を つかおう" }
+  ],
+  "goal": { "type": "reach", "x": 7, "y": 1 },
+  "toolbox": ["when_flag", "move_right", "repeat_n"],
+  "hints": [
+    "くりかえし ブロックを つかうと すくない ブロックで できるよ",
+    "みぎへ を 6かい くりかえせば ゴールだよ"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 3, "allowLinearSolution": false },
+  "instruction": "すくない ブロックで ゴールしよう！🏆",
+  "challenge": {
+    "constraints": {
+      "maxBlocks": 3,
+      "requiredBlocks": ["repeat_n"]
+    },
+    "challengeDescription": "くりかえし を つかって、3この ブロック いかで ゴールしよう！",
+    "rewards": {
+      "badge": "loop_master",
+      "xp": 50
+    }
+  }
+}

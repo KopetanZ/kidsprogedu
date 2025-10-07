@@ -4,11 +4,37 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { lessons } from '../../../content/lessons';
 import { useSaveStore } from '../../save/store';
+import { useBadgeStore } from '../../badges/store';
+import BadgeNotification from '../../components/BadgeNotification';
+import SkillMap from '../../components/SkillMap';
+import type { Skill } from '../../../core/blocks/schemas';
 import voice from '../../../content/voice/ja.json';
 
 export default function LessonsPage() {
   const { load, clearIds } = useSaveStore();
-  useEffect(() => { load(); }, []);
+  const { earnedBadges } = useBadgeStore();
+
+  useEffect(() => {
+    load();
+
+    // BGMを再生
+    if (typeof window !== 'undefined') {
+      import('../../audio/bgm').then(({ getBGMPlayer }) => {
+        const bgm = getBGMPlayer();
+        const muted = localStorage.getItem('audioMuted') === 'true';
+        bgm.play('menu', muted);
+      });
+    }
+
+    return () => {
+      // ページを離れる時にBGMを停止
+      if (typeof window !== 'undefined') {
+        import('../../audio/bgm').then(({ getBGMPlayer }) => {
+          getBGMPlayer().stop();
+        });
+      }
+    };
+  }, []);
 
   // レベル判定
   const getLevel = (id: string) => {
@@ -49,8 +75,36 @@ export default function LessonsPage() {
 
   const nextLessonId = getNextLesson();
 
+  // スキル別の進捗を計算
+  const calculateSkillProgress = () => {
+    const skillMap = new Map<Skill, { completed: number; total: number }>();
+
+    for (const lesson of lessons) {
+      const skills = lesson.skills || ['sequence'];
+      for (const skill of skills) {
+        const current = skillMap.get(skill as Skill) || { completed: 0, total: 0 };
+        current.total += 1;
+        if (clearIds.includes(lesson.id)) {
+          current.completed += 1;
+        }
+        skillMap.set(skill as Skill, current);
+      }
+    }
+
+    return Array.from(skillMap.entries()).map(([skill, data]) => ({
+      skill,
+      completed: data.completed,
+      total: data.total,
+      mastery: (data.completed / data.total) * 100,
+    }));
+  };
+
+  const skillProgress = calculateSkillProgress();
+
   return (
     <main style={{ padding: 24, background: '#F5F7FB', minHeight: '100vh' }}>
+      <BadgeNotification />
+
       {/* ガイドヘッダー */}
       <div style={{
         background: '#fff',
@@ -68,6 +122,29 @@ export default function LessonsPage() {
         <p style={{ fontSize: 18, color: '#4F8EF7', fontWeight: 'bold' }}>
           ⭐ {voice.lessons_guide.recommended}
         </p>
+        {/* バッジへのリンク */}
+        <Link href="/badges">
+          <button
+            style={{
+              marginTop: 16,
+              padding: '8px 20px',
+              fontSize: 18,
+              borderRadius: 12,
+              border: '2px solid #4F8EF7',
+              background: '#fff',
+              color: '#4F8EF7',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+            }}
+          >
+            🏅 バッジコレクション ({earnedBadges.length})
+          </button>
+        </Link>
+      </div>
+
+      {/* スキルマップ */}
+      <div style={{ marginBottom: 32 }}>
+        <SkillMap skillProgress={skillProgress} />
       </div>
 
       {/* レベル別セクション */}

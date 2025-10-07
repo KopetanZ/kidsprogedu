@@ -5,6 +5,10 @@ import TopBar from '../../components/TopBar';
 import Button from '../../components/Button';
 import BlockItem from '../../components/BlockItem';
 import Stage from '../../canvas/Stage';
+import SubgoalList from '../../components/SubgoalList';
+import ParsonsEditor from '../../components/ParsonsEditor';
+import DebugEditor from '../../components/DebugEditor';
+import ChallengeConstraints from '../../components/ChallengeConstraints';
 import { lessonMap } from '../../../content/lessons';
 import { useEditorStore } from '../../editor/store';
 import { useSaveStore } from '../../save/store';
@@ -76,6 +80,7 @@ function EditorInner() {
   const { muted, toggle } = useAudioStore();
   const [showGuide, setShowGuide] = useState(false);
   const [codeLaneDragOver, setCodeLaneDragOver] = useState(false);
+  const [completedSubgoals, setCompletedSubgoals] = useState<string[]>([]);
 
   useEffect(() => {
     if (!lesson) router.push('/lessons');
@@ -87,12 +92,33 @@ function EditorInner() {
       if (!hasSeenEditorGuide && lessonId === 'L1_01_go_right') {
         setShowGuide(true);
       }
+
+      // BGMを再生
+      if (typeof window !== 'undefined') {
+        import('../../audio/bgm').then(({ getBGMPlayer }) => {
+          const bgm = getBGMPlayer();
+          bgm.play('editor', muted);
+        });
+      }
     }
+
+    return () => {
+      // ページを離れる時にBGMを停止
+      if (typeof window !== 'undefined') {
+        import('../../audio/bgm').then(({ getBGMPlayer }) => {
+          getBGMPlayer().stop();
+        });
+      }
+    };
   }, [lessonId]);
 
   const closeGuide = () => {
     localStorage.setItem('hasSeenEditorGuide', 'true');
     setShowGuide(false);
+  };
+
+  const showGuideAgain = () => {
+    setShowGuide(true);
   };
 
   // レッスンのtoolboxに基づいてパレットを動的生成
@@ -107,7 +133,7 @@ function EditorInner() {
 
   return (
     <main style={{ background: '#F5F7FB', minHeight: '100vh' }}>
-      <TopBar muted={muted} onToggleMute={toggle} onRun={async () => {
+      <TopBar muted={muted} onToggleMute={toggle} onGuide={showGuideAgain} onRun={async () => {
         if (!lesson) return;
 
         // ブロック0個チェック
@@ -123,6 +149,28 @@ function EditorInner() {
         if (maxBlocks && blockCount > maxBlocks) {
           hint(`ブロックが おおすぎるよ！${maxBlocks}こ いかで ゴールしてね（いま ${blockCount}こ）`);
           return;
+        }
+
+        // 必須ブロックチェック
+        const requiredBlocks = lesson.accept?.requiredBlocks;
+        if (requiredBlocks && requiredBlocks.length > 0) {
+          const usedBlocks = new Set<string>();
+          const collectBlocks = (blocks: Block[]) => {
+            for (const block of blocks) {
+              usedBlocks.add(block.block);
+              if (block.children) {
+                collectBlocks(block.children);
+              }
+            }
+          };
+          collectBlocks(program);
+
+          for (const required of requiredBlocks) {
+            if (!usedBlocks.has(required)) {
+              hint(`「${required}」の ブロックを つかってね！`);
+              return;
+            }
+          }
         }
 
         runPressed(lesson.id);
@@ -155,9 +203,63 @@ function EditorInner() {
         )}
       </section>
 
-      {/* Code lane */}
-      <section style={{ padding: '8px 16px' }}>
-        <div style={{ fontSize: 18, margin: '8px 0' }}>こーど</div>
+      {/* Subgoals */}
+      {lesson?.subgoals && lesson.subgoals.length > 0 && (
+        <section style={{ padding: '0 16px' }}>
+          <SubgoalList subgoals={lesson.subgoals} completedIds={completedSubgoals} />
+        </section>
+      )}
+
+      {/* Challenge Constraints */}
+      {lesson?.type === 'challenge' && lesson.challenge && (
+        <section style={{ padding: '0 16px' }}>
+          <ChallengeConstraints challenge={lesson.challenge} currentProgram={program} />
+        </section>
+      )}
+
+      {/* Parsonsモード */}
+      {lesson?.type === 'parsons' && lesson.parsons && (
+        <section style={{ padding: '8px 16px' }}>
+          <ParsonsEditor
+            fragments={lesson.parsons.fragments}
+            correctOrder={lesson.parsons.correctOrder}
+            onCheck={(order) => {
+              console.log('Current order:', order);
+            }}
+            onComplete={async () => {
+              if (!lesson) return;
+              clearLesson(lesson.id);
+              try { saveStore.getState().markCleared(lesson.id); } catch {}
+              router.push(`/clear?lessonId=${encodeURIComponent(lesson.id)}`);
+            }}
+          />
+        </section>
+      )}
+
+      {/* Debugモード */}
+      {lesson?.type === 'debug' && lesson.debug && (
+        <section style={{ padding: '8px 16px' }}>
+          <DebugEditor
+            buggyCode={lesson.debug.buggyCode}
+            bugType={lesson.debug.bugType}
+            bugDescription={lesson.debug.bugDescription}
+            onFixAttempt={(code) => {
+              console.log('Fix attempt:', code);
+            }}
+            onComplete={async () => {
+              if (!lesson) return;
+              clearLesson(lesson.id);
+              try { saveStore.getState().markCleared(lesson.id); } catch {}
+              router.push(`/clear?lessonId=${encodeURIComponent(lesson.id)}`);
+            }}
+          />
+        </section>
+      )}
+
+      {/* Code lane (通常のdrillモード) */}
+      {(!lesson?.type || lesson.type === 'drill') && (
+        <section style={{ padding: '8px 16px' }}>
+          <div style={{ fontSize: 18, margin: '8px 0' }}>こーど</div>
         <div
           onDragOver={(e) => {
             e.preventDefault();
@@ -200,15 +302,17 @@ function EditorInner() {
         </div>
       </section>
 
-      {/* Palette */}
-      <section style={{ padding: '8px 16px 24px' }}>
-        <div style={{ fontSize: 18, margin: '8px 0' }}>ぶろっく</div>
-        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 8 }}>
-          {palette.map((b, idx) => (
-            <BlockItem key={idx} block={b} onClick={() => addBlock(b)} isDraggable={true} />
-          ))}
-        </div>
-      </section>
+      {/* Palette (drillモードのみ) */}
+      {(!lesson?.type || lesson.type === 'drill') && (
+        <section style={{ padding: '8px 16px 24px' }}>
+          <div style={{ fontSize: 18, margin: '8px 0' }}>ぶろっく</div>
+          <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 8 }}>
+            {palette.map((b, idx) => (
+              <BlockItem key={idx} block={b} onClick={() => addBlock(b)} isDraggable={true} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 実行中オーバーレイ */}
       {isRunning && (
@@ -271,13 +375,42 @@ function EditorInner() {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 style={{ fontSize: 28, marginBottom: 24, color: '#4F8EF7' }}>
-              つかいかた
+              📖 つかいかた
             </h2>
             <div style={{ textAlign: 'left', fontSize: 20, lineHeight: 1.8, marginBottom: 24 }}>
-              <p style={{ marginBottom: 16 }}>{voice.editor_guide.step1}</p>
-              <p style={{ marginBottom: 16 }}>{voice.editor_guide.step2}</p>
-              <p style={{ marginBottom: 16 }}>{voice.editor_guide.step3}</p>
-              <p style={{ color: '#4F8EF7', fontWeight: 'bold' }}>{voice.editor_guide.hint_button}</p>
+              <div style={{ marginBottom: 20, padding: 16, background: '#E3F2FD', borderRadius: 12 }}>
+                <div style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8, color: '#1F2430' }}>
+                  1️⃣ {voice.editor_guide.step1.split('。')[0]}
+                </div>
+                <div style={{ fontSize: 18, color: '#666' }}>
+                  したの「ぶろっく」から すきな ブロックを えらんで タップしてね
+                </div>
+              </div>
+              <div style={{ marginBottom: 20, padding: 16, background: '#FFF3E0', borderRadius: 12 }}>
+                <div style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8, color: '#1F2430' }}>
+                  2️⃣ {voice.editor_guide.step2.split('。')[0]}
+                </div>
+                <div style={{ fontSize: 18, color: '#666' }}>
+                  ▶ボタンを おして プログラムを うごかそう
+                </div>
+              </div>
+              <div style={{ marginBottom: 20, padding: 16, background: '#E8F5E9', borderRadius: 12 }}>
+                <div style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8, color: '#1F2430' }}>
+                  3️⃣ {voice.editor_guide.step3.split('。')[0]}
+                </div>
+                <div style={{ fontSize: 18, color: '#666' }}>
+                  ネコさんが ゴールに ついたら クリア！🎉
+                </div>
+              </div>
+              <div style={{ padding: 16, background: '#F3E5F5', borderRadius: 12 }}>
+                <div style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 8, color: '#9C27B0' }}>
+                  💡 こまったら
+                </div>
+                <div style={{ fontSize: 18, color: '#666' }}>
+                  みぎうえの 💡ボタンを おすと ヒントが でるよ！<br/>
+                  📖ボタンを おすと いつでも この がめんに もどれるよ
+                </div>
+              </div>
             </div>
             <Button onClick={closeGuide} aria-label="わかった">
               わかった！

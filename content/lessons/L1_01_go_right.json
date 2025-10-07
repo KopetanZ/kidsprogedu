@@ -1,6 +1,13 @@
 {
   "id": "L1_01_go_right",
   "title": "みぎへ いこう",
+  "type": "drill",
+  "skills": ["sequence"],
+  "difficulty": 1,
+  "estimatedTimeMin": 3,
+  "subgoals": [
+    { "id": "sg1", "label": "みぎに 3かい うごかそう" }
+  ],
   "goal": { "type": "reach", "x": 4, "y": 1 },
   "toolbox": ["when_flag", "move_right", "play_sound"],
   "hints": [

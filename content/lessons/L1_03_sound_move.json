@@ -1,6 +1,10 @@
 {
   "id": "L1_03_sound_move",
   "title": "おとを ならそう",
+  "type": "drill",
+  "skills": ["sequence"],
+  "difficulty": 1,
+  "estimatedTimeMin": 3,
   "goal": { "type": "reach", "x": 3, "y": 1 },
   "toolbox": ["when_flag", "move_right", "play_sound"],
   "hints": [
@@ -10,7 +14,11 @@
   "starterCode": [
     { "block": "when_flag" }
   ],
-  "accept": { "maxBlocks": 4, "allowLinearSolution": true },
+  "accept": {
+    "maxBlocks": 4,
+    "allowLinearSolution": true,
+    "requiredBlocks": ["play_sound"]
+  },
   "instruction": "おとを ならして ゴールに いこう！🎵"
 }
 

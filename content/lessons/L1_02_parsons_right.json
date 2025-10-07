@@ -1,0 +1,33 @@
+{
+  "id": "L1_02_parsons_right",
+  "title": "ならべかえ：みぎへ",
+  "type": "parsons",
+  "skills": ["sequence"],
+  "difficulty": 1,
+  "estimatedTimeMin": 3,
+  "subgoals": [
+    { "id": "sg1", "label": "ブロックを ただしい じゅんばんに ならべよう" }
+  ],
+  "goal": { "type": "reach", "x": 4, "y": 1 },
+  "toolbox": ["when_flag", "move_right"],
+  "hints": [
+    "ブロックを タップすると うえの エリアに おかれるよ",
+    "↑↓ボタンで じゅんばんを かえられるよ"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 4, "allowLinearSolution": true },
+  "instruction": "ブロックを ならべて ネコを うごかそう！",
+  "parsons": {
+    "fragments": [
+      { "block": "move_right", "times": 1 },
+      { "block": "move_right", "times": 1 },
+      { "block": "move_right", "times": 1 }
+    ],
+    "distractors": [
+      { "block": "move_left", "times": 1 }
+    ],
+    "correctOrder": [0, 1, 2]
+  }
+}

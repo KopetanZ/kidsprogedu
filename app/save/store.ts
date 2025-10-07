@@ -29,6 +29,13 @@ export const useSaveStore = create<SaveState>()((set, get) => ({
   async markCleared(lessonId) {
     const updated = await markLessonCleared(lessonId);
     set({ data: updated, clearIds: updated.clearedLessonIds });
+
+    // バッジチェック
+    if (typeof window !== 'undefined') {
+      import('../badges/checker').then(({ checkBadges }) => {
+        checkBadges(updated.clearedLessonIds);
+      }).catch(() => {});
+    }
   },
 }));
 

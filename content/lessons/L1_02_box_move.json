@@ -1,6 +1,10 @@
 {
   "id": "L1_02_box_move",
   "title": "はこを はこぼう",
+  "type": "drill",
+  "skills": ["sequence"],
+  "difficulty": 1,
+  "estimatedTimeMin": 3,
   "goal": { "type": "reach", "x": 2, "y": 2 },
   "toolbox": ["when_flag", "move_up", "move_right", "move_down"],
   "hints": [

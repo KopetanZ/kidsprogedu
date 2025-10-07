@@ -6,11 +6,12 @@ type Props = {
   onRun?: () => void;
   onReset?: () => void;
   onHint?: () => void;
+  onGuide?: () => void;
   muted?: boolean;
   onToggleMute?: () => void;
 };
 
-export default function TopBar({ onRun, onReset, onHint, muted, onToggleMute }: Props) {
+export default function TopBar({ onRun, onReset, onHint, onGuide, muted, onToggleMute }: Props) {
   return (
     <div
       style={{
@@ -30,8 +31,13 @@ export default function TopBar({ onRun, onReset, onHint, muted, onToggleMute }: 
         ↺
       </Button>
       <Button aria-label="ヒント" variant="ghost" onClick={onHint}>
-        ?
+        💡
       </Button>
+      {onGuide && (
+        <Button aria-label="つかいかた" variant="ghost" onClick={onGuide}>
+          📖
+        </Button>
+      )}
       <Button aria-label="じっこう" onClick={onRun}>
         ▶︎
       </Button>

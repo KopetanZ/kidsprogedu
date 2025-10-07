@@ -1,6 +1,10 @@
 {
   "id": "L2_01_walk_repeat",
   "title": "〇かい あるこう",
+  "type": "drill",
+  "skills": ["loop"],
+  "difficulty": 2,
+  "estimatedTimeMin": 5,
   "goal": { "type": "reach", "x": 4, "y": 1 },
   "toolbox": ["when_flag", "move_right", "repeat_n"],
   "hints": [
@@ -11,7 +15,11 @@
     { "block": "when_flag" },
     { "block": "move_right", "times": 3 }
   ],
-  "accept": { "maxBlocks": 3, "allowLinearSolution": true },
+  "accept": {
+    "maxBlocks": 3,
+    "allowLinearSolution": false,
+    "requiredBlocks": ["repeat_n"]
+  },
   "instruction": "くりかえしを つかおう！🔄"
 }
 

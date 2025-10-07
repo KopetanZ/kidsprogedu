@@ -7,7 +7,22 @@
       "Bash(pnpm run:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Read(//c/Users/n_kop/.ssh/**)",
+      "Bash(ssh-keygen:*)",
+      "Bash(cat:*)",
+      "WebSearch",
+      "WebFetch(domain:www.fun-scratchjr.com)",
+      "Bash(npx tsx:*)",
+      "Bash(npm run:*)",
+      "Bash(node:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(npx next:*)",
+      "Bash(where node)",
+      "Bash(./node_modules/.bin/next build)",
+      "Bash(for:*)",
+      "Bash(do echo \"=== $f ===\")",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

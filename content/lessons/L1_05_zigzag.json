@@ -1,11 +1,15 @@
 {
   "id": "L1_05_zigzag",
   "title": "ジグザグに すすもう",
+  "type": "drill",
+  "skills": ["sequence"],
+  "difficulty": 1,
+  "estimatedTimeMin": 4,
   "goal": { "type": "reach", "x": 3, "y": 3 },
-  "toolbox": ["when_flag", "move_right", "move_up"],
+  "toolbox": ["when_flag", "move_right", "move_down"],
   "hints": [
-    "みぎと うえを こうごに つかってみよう",
-    "みぎ うえ みぎ うえ の じゅんばんで おいてみてね"
+    "みぎと したを こうごに つかってみよう",
+    "みぎ した みぎ した の じゅんばんで おいてみてね"
   ],
   "starterCode": [
     { "block": "when_flag" }

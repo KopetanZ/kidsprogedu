@@ -1,0 +1,38 @@
+{
+  "id": "L1_03_debug_right",
+  "title": "デバッグ：みぎへ",
+  "type": "debug",
+  "skills": ["sequence"],
+  "difficulty": 1,
+  "estimatedTimeMin": 4,
+  "subgoals": [
+    { "id": "sg1", "label": "バグを みつけよう" },
+    { "id": "sg2", "label": "バグを なおそう" }
+  ],
+  "goal": { "type": "reach", "x": 4, "y": 1 },
+  "toolbox": ["when_flag", "move_right", "move_left"],
+  "hints": [
+    "ブロックの ×ボタンで けせるよ",
+    "みぎに 3かい うごけば ゴールだよ"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 4, "allowLinearSolution": true },
+  "instruction": "バグを なおして ゴールへ！",
+  "debug": {
+    "buggyCode": [
+      { "block": "when_flag" },
+      { "block": "move_right", "times": 1 },
+      { "block": "move_left", "times": 1 },
+      { "block": "move_right", "times": 1 },
+      { "block": "move_right", "times": 1 }
+    ],
+    "bugType": "まちがった ブロック",
+    "bugDescription": "「ひだりへ」の ブロックが まぎれこんでいるよ！",
+    "hints": [
+      "2ばんめの ブロックが あやしいよ",
+      "「ひだりへ」を けしてみよう"
+    ]
+  }
+}

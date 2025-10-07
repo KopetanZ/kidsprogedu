@@ -98,7 +98,8 @@ function ClearInner() {
       <div style={{
         width: '100%',
         maxWidth: 600,
-        height: 360,
+        minHeight: 480,
+        padding: '32px 24px',
         borderRadius: 24,
         background: '#fff',
         boxShadow: '0 4px 12px rgba(0,0,0,.12)',

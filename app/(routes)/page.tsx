@@ -33,20 +33,28 @@ export default function HomePage() {
 
   const tutorialContent = [
     {
+      emoji: '🐱',
       title: voice.tutorial.app_intro,
       text: voice.tutorial.app_description,
+      color: '#E3F2FD',
     },
     {
+      emoji: '🧩',
       title: voice.tutorial.step1_title,
       text: voice.tutorial.step1_text,
+      color: '#FFF3E0',
     },
     {
+      emoji: '▶️',
       title: voice.tutorial.step2_title,
       text: voice.tutorial.step2_text,
+      color: '#E8F5E9',
     },
     {
+      emoji: '🎉',
       title: voice.tutorial.step3_title,
       text: voice.tutorial.step3_text,
+      color: '#F3E5F5',
     },
   ];
 
@@ -124,15 +132,50 @@ export default function HomePage() {
       <Modal isOpen={showTutorial} onClose={closeTutorial} showCloseButton={false}>
         {tutorialContent[tutorialStep] && (
           <div style={{ textAlign: 'center' }}>
-            <h2 style={{ fontSize: 28, marginBottom: 24, color: '#4F8EF7' }}>
+            {/* 大きな絵文字 */}
+            <div style={{
+              fontSize: 64,
+              marginBottom: 16,
+              animation: 'bounce 0.6s ease-out',
+            }}>
+              {tutorialContent[tutorialStep].emoji}
+            </div>
+
+            {/* タイトル */}
+            <h2 style={{ fontSize: 28, marginBottom: 16, color: '#4F8EF7' }}>
               {tutorialContent[tutorialStep].title}
             </h2>
-            <p style={{ fontSize: 22, lineHeight: 1.6, marginBottom: 32, color: '#1F2430' }}>
+
+            {/* 説明文 */}
+            <div style={{
+              fontSize: 20,
+              lineHeight: 1.8,
+              marginBottom: 24,
+              color: '#1F2430',
+              background: tutorialContent[tutorialStep].color,
+              padding: 24,
+              borderRadius: 16,
+            }}>
               {tutorialContent[tutorialStep].text}
-            </p>
-            <div style={{ fontSize: 18, color: '#999', marginBottom: 24 }}>
-              {tutorialStep + 1} / {tutorialContent.length}
             </div>
+
+            {/* プログレスインジケーター */}
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 24 }}>
+              {tutorialContent.map((_, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    background: idx === tutorialStep ? '#4F8EF7' : '#E5EAF3',
+                    transition: 'all 0.3s',
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* ボタン */}
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
               <Button variant="ghost" onClick={closeTutorial} aria-label="スキップ">
                 スキップ
@@ -144,6 +187,14 @@ export default function HomePage() {
           </div>
         )}
       </Modal>
+
+      {/* アニメーションCSS */}
+      <style>{`
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+      `}</style>
     </main>
   );
 }
