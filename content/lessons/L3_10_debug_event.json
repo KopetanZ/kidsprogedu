@@ -11,5 +11,6 @@
     { "block": "when_flag" },
     { "block": "move_left", "times": 3 }
   ],
-  "accept": { "maxBlocks": 3, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 3, "allowLinearSolution": true },
+  "instruction": "まちがいを なおそう！🔧"
 }

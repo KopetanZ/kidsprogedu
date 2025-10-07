@@ -8,5 +8,6 @@
     "はたブロックに みぎ と うえ を いれて なんかい か おしてね"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 4, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 4, "allowLinearSolution": true },
+  "instruction": "パターンを つくろう！🎨"
 }

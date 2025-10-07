@@ -24,5 +24,6 @@
   "accept": {
     "maxBlocks": 4,
     "allowLinearSolution": true
-  }
+  },
+  "instruction": "ゴールまで にげよう！🏃"
 }

@@ -8,5 +8,6 @@
     "おなじ うごきが たくさん あるね。つぎの レベルで まとめられるよ"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 7, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 7, "allowLinearSolution": true },
+  "instruction": "ながい みちを あるこう！🛤️"
 }

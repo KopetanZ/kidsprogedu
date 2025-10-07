@@ -8,5 +8,6 @@
     "くりかえしを なんかいも つかって ふくざつな うごきを つくろう"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 12, "allowLinearSolution": true },
+  "instruction": "さくひんを つくろう！🌈"
 }

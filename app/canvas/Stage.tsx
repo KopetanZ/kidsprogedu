@@ -8,9 +8,10 @@ type Props = {
   gridH?: number; // default 5
   pos: { x: number; y: number };
   goal: { x: number; y: number };
+  instruction?: string; // ゴール地点の吹き出しメッセージ
 };
 
-export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5, pos, goal }: Props) {
+export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5, pos, goal, instruction }: Props) {
   const ref = useRef<HTMLCanvasElement | null>(null);
   const rafRef = useRef<number | undefined>(undefined);
 
@@ -110,16 +111,61 @@ export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5,
   }, [pos.x, pos.y, goal.x, goal.y, width, height, gridLayout]);
 
   return (
-    <canvas
-      ref={ref}
-      style={{
-        width,
-        height,
-        borderRadius: 16,
-        boxShadow: '0 2px 6px rgba(0,0,0,.08)'
-      }}
-      aria-label="すてーじ"
-    />
+    <div style={{ position: 'relative', display: 'inline-block' }}>
+      <canvas
+        ref={ref}
+        style={{
+          width,
+          height,
+          borderRadius: 16,
+          boxShadow: '0 2px 6px rgba(0,0,0,.08)'
+        }}
+        aria-label="すてーじ"
+      />
+
+      {/* ゴール地点の吹き出し */}
+      {instruction && (
+        <div style={{
+          position: 'absolute',
+          left: `${gridLayout.pad + (goal.x - 0.5) * gridLayout.cellW + gridLayout.cellW * 0.7}px`,
+          top: `${gridLayout.pad + (goal.y - 0.5) * gridLayout.cellH - 70}px`,
+          background: '#fff',
+          border: '3px solid #4F8EF7',
+          borderRadius: 16,
+          padding: '8px 16px',
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: '#1F2430',
+          boxShadow: '0 4px 12px rgba(0,0,0,.15)',
+          maxWidth: 200,
+          pointerEvents: 'none',
+          zIndex: 10,
+        }}>
+          {instruction}
+          {/* 吹き出しの三角形 */}
+          <div style={{
+            position: 'absolute',
+            bottom: -10,
+            left: 20,
+            width: 0,
+            height: 0,
+            borderLeft: '10px solid transparent',
+            borderRight: '10px solid transparent',
+            borderTop: '10px solid #4F8EF7',
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: -6,
+            left: 22,
+            width: 0,
+            height: 0,
+            borderLeft: '8px solid transparent',
+            borderRight: '8px solid transparent',
+            borderTop: '8px solid #fff',
+          }} />
+        </div>
+      )}
+    </div>
   );
 }
 

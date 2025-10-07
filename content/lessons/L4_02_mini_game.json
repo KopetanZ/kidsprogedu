@@ -28,5 +28,6 @@
   "accept": {
     "maxBlocks": 12,
     "allowLinearSolution": true
-  }
+  },
+  "instruction": "げーむを つくろう！🎮"
 }

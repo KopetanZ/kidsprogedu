@@ -24,5 +24,6 @@
   "accept": {
     "maxBlocks": 6,
     "allowLinearSolution": true
-  }
+  },
+  "instruction": "みちを たどって すすもう！🛣️"
 }

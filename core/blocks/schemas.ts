@@ -45,6 +45,7 @@ export const LessonSchema = z.object({
   hints: z.array(z.string()).min(1),
   starterCode: z.array(BlockSchema),
   accept: AcceptSchema,
+  instruction: z.string().optional(), // ゴール地点の吹き出しメッセージ
 });
 
 export const CreationSchema = z.object({

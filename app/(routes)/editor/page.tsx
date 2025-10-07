@@ -148,7 +148,7 @@ function EditorInner() {
 
       {/* Stage */}
       <section style={{ padding: 16 }}>
-        <Stage pos={pos} goal={lesson?.goal ?? { x: 4, y: 1 }} />
+        <Stage pos={pos} goal={lesson?.goal ?? { x: 4, y: 1 }} instruction={lesson?.instruction} />
         {hintText && (
           <div style={{ marginTop: 8, fontSize: 18, color: '#1F2430' }}>{hintText}</div>
         )}

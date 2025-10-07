@@ -23,5 +23,6 @@
   "accept": {
     "maxBlocks": 3,
     "allowLinearSolution": true
-  }
+  },
+  "instruction": "はしごを のぼろう！🪜"
 }

@@ -8,5 +8,6 @@
     "はたブロックに おと みぎ みぎ みぎ を いれてね"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 4, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 4, "allowLinearSolution": true },
+  "instruction": "おとを ならして すすもう！🎵"
 }

@@ -8,5 +8,6 @@
     "くりかえしを つかうと すくない ブロックで ゴールできるよ"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 8, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 8, "allowLinearSolution": true },
+  "instruction": "ぜんぶ つかって ゴール！✨"
 }

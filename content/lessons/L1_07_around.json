@@ -10,5 +10,6 @@
   "starterCode": [
     { "block": "when_flag" }
   ],
-  "accept": { "maxBlocks": 5, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 5, "allowLinearSolution": true },
+  "instruction": "ぐるっと まわって もどろう！🔄"
 }

@@ -10,6 +10,7 @@
   "starterCode": [
     { "block": "when_flag" }
   ],
-  "accept": { "maxBlocks": 3, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 3, "allowLinearSolution": true },
+  "instruction": "5かい あるいてね！👣"
 }
 
