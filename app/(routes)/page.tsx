@@ -122,25 +122,27 @@ export default function HomePage() {
 
       {/* チュートリアルモーダル */}
       <Modal isOpen={showTutorial} onClose={closeTutorial} showCloseButton={false}>
-        <div style={{ textAlign: 'center' }}>
-          <h2 style={{ fontSize: 28, marginBottom: 24, color: '#4F8EF7' }}>
-            {tutorialContent[tutorialStep].title}
-          </h2>
-          <p style={{ fontSize: 22, lineHeight: 1.6, marginBottom: 32, color: '#1F2430' }}>
-            {tutorialContent[tutorialStep].text}
-          </p>
-          <div style={{ fontSize: 18, color: '#999', marginBottom: 24 }}>
-            {tutorialStep + 1} / {tutorialContent.length}
+        {tutorialContent[tutorialStep] && (
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{ fontSize: 28, marginBottom: 24, color: '#4F8EF7' }}>
+              {tutorialContent[tutorialStep].title}
+            </h2>
+            <p style={{ fontSize: 22, lineHeight: 1.6, marginBottom: 32, color: '#1F2430' }}>
+              {tutorialContent[tutorialStep].text}
+            </p>
+            <div style={{ fontSize: 18, color: '#999', marginBottom: 24 }}>
+              {tutorialStep + 1} / {tutorialContent.length}
+            </div>
+            <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
+              <Button variant="ghost" onClick={closeTutorial} aria-label="スキップ">
+                スキップ
+              </Button>
+              <Button onClick={nextStep} aria-label={tutorialStep < 3 ? "つぎへ" : "はじめる"}>
+                {tutorialStep < 3 ? 'つぎへ →' : voice.tutorial.ready}
+              </Button>
+            </div>
           </div>
-          <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
-            <Button variant="ghost" onClick={closeTutorial} aria-label="スキップ">
-              スキップ
-            </Button>
-            <Button onClick={nextStep} aria-label={tutorialStep < 3 ? "つぎへ" : "はじめる"}>
-              {tutorialStep < 3 ? 'つぎへ →' : voice.tutorial.ready}
-            </Button>
-          </div>
-        </div>
+        )}
       </Modal>
     </main>
   );
