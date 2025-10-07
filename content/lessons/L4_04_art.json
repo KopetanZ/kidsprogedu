@@ -1,13 +1,14 @@
 {
   "id": "L4_04_art",
   "title": "アートを かこう",
-  "description": "くりかえしを つかって きれいな かたちを かこう",
-  "difficulty": 4,
-  "goal": { "x": 4, "y": 4 },
-  "toolbox": ["move_right", "move_up", "move_left", "move_down", "repeat_n", "play_sound"],
-  "starterCode": [],
-  "hints": {
-    "start": "くりかえしを つかって きれいな パターンを つくろう",
-    "stuck": "おなじ うごきを くりかえすと きれいな かたちに なるよ"
-  }
+  "goal": { "type": "reach", "x": 4, "y": 4 },
+  "toolbox": ["when_flag", "move_right", "move_up", "move_left", "move_down", "repeat_n", "play_sound"],
+  "hints": [
+    "くりかえしを つかって きれいな パターンを つくろう",
+    "おなじ うごきを くりかえすと きれいな かたちに なるよ"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 25, "allowLinearSolution": true }
 }

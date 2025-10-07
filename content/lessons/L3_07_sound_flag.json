@@ -1,13 +1,12 @@
 {
   "id": "L3_07_sound_flag",
   "title": "おとを ならして すすもう",
-  "description": "はたを おしたら おとを ならして すすもう",
-  "difficulty": 3,
-  "goal": { "x": 3, "y": 1 },
-  "toolbox": ["move_right", "play_sound", "when_flag"],
+  "goal": { "type": "reach", "x": 3, "y": 1 },
+  "toolbox": ["when_flag", "move_right", "play_sound"],
+  "hints": [
+    "おとブロックと みぎブロックを いっしょに つかおう",
+    "はたブロックに おと みぎ みぎ みぎ を いれてね"
+  ],
   "starterCode": [],
-  "hints": {
-    "start": "おとブロックと みぎブロックを いっしょに つかおう",
-    "stuck": "はたブロックに おと みぎ みぎ みぎ を いれてね"
-  }
+  "accept": { "maxBlocks": 10, "allowLinearSolution": true }
 }

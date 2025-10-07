@@ -1,13 +1,14 @@
 {
   "id": "L4_03_maze",
   "title": "めいろを つくろう",
-  "description": "じぶんで かんがえて めいろを ぬけよう！",
-  "difficulty": 4,
-  "goal": { "x": 7, "y": 5 },
-  "toolbox": ["move_right", "move_up", "move_left", "move_down", "repeat_n", "play_sound"],
-  "starterCode": [],
-  "hints": {
-    "start": "すべての ブロックを つかって じぶんだけの みちを つくろう",
-    "stuck": "まよったら いろんな ほうこうを ためしてみてね！"
-  }
+  "goal": { "type": "reach", "x": 7, "y": 5 },
+  "toolbox": ["when_flag", "move_right", "move_up", "move_left", "move_down", "repeat_n", "play_sound"],
+  "hints": [
+    "すべての ブロックを つかって じぶんだけの みちを つくろう",
+    "まよったら いろんな ほうこうを ためしてみてね！"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 30, "allowLinearSolution": true }
 }

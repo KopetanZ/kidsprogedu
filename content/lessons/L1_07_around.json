@@ -1,13 +1,14 @@
 {
   "id": "L1_07_around",
   "title": "ぐるっと まわろう",
-  "description": "みぎ うえ ひだり したを つかって いちしゅう しよう",
-  "difficulty": 1,
-  "goal": { "x": 1, "y": 1 },
-  "toolbox": ["move_right", "move_up", "move_left", "move_down"],
-  "starterCode": [],
-  "hints": {
-    "start": "4つの ほうこうを つかって まるく うごこう",
-    "stuck": "みぎ→うえ→ひだり→した の じゅんばんで もとに もどれるよ"
-  }
+  "goal": { "type": "reach", "x": 1, "y": 1 },
+  "toolbox": ["when_flag", "move_right", "move_up", "move_left", "move_down"],
+  "hints": [
+    "4つの ほうこうを つかって まるく うごこう",
+    "みぎ→うえ→ひだり→した の じゅんばんで もとに もどれるよ"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
 }

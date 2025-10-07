@@ -1,13 +1,14 @@
 {
   "id": "L4_06_challenge",
   "title": "さいしゅう チャレンジ",
-  "description": "これまで ならった ことを ぜんぶ つかって ゴールしよう！",
-  "difficulty": 4,
-  "goal": { "x": 8, "y": 5 },
-  "toolbox": ["move_right", "move_up", "move_left", "move_down", "repeat_n", "play_sound", "when_flag"],
-  "starterCode": [],
-  "hints": {
-    "start": "すべての ブロックを つかえるよ！じぶんで かんがえてみてね",
-    "stuck": "これまでの レッスンを おもいだして やってみよう"
-  }
+  "goal": { "type": "reach", "x": 8, "y": 5 },
+  "toolbox": ["when_flag", "move_right", "move_up", "move_left", "move_down", "repeat_n", "play_sound"],
+  "hints": [
+    "すべての ブロックを つかえるよ！じぶんで かんがえてみてね",
+    "これまでの レッスンを おもいだして やってみよう"
+  ],
+  "starterCode": [
+    { "block": "when_flag" }
+  ],
+  "accept": { "maxBlocks": 35, "allowLinearSolution": true }
 }
