@@ -1,0 +1,13 @@
+{
+  "id": "L3_11_use_everything",
+  "title": "ぜんぶ つかって ゴール",
+  "description": "これまで ならった ぜんぶの ブロックを つかってみよう",
+  "difficulty": 3,
+  "goal": { "x": 7, "y": 4 },
+  "toolbox": ["move_right", "move_up", "move_left", "move_down", "repeat_n", "play_sound", "when_flag"],
+  "starterCode": [],
+  "hints": {
+    "start": "はた、くりかえし、うごき、おと を ぜんぶ つかえるよ",
+    "stuck": "くりかえしを つかうと すくない ブロックで ゴールできるよ"
+  }
+}

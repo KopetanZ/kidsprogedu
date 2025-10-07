@@ -1,0 +1,15 @@
+{
+  "id": "L2_10_debug_repeat",
+  "title": "まちがいを なおそう",
+  "description": "くりかえしの かずが まちがっているよ。なおしてね",
+  "difficulty": 2,
+  "goal": { "x": 5, "y": 1 },
+  "toolbox": ["move_right", "repeat_n"],
+  "starterCode": [
+    { "block": "repeat_n", "n": 3, "children": [{ "block": "move_right", "times": 1 }] }
+  ],
+  "hints": {
+    "start": "いま 3かい くりかえしているね。ゴールまで なんかい ひつようかな？",
+    "stuck": "くりかえしの かずを 5に かえてみよう"
+  }
+}
