@@ -75,6 +75,7 @@ function EditorInner() {
   const saveStore = useSaveStore;
   const { muted, toggle } = useAudioStore();
   const [showGuide, setShowGuide] = useState(false);
+  const [codeLaneDragOver, setCodeLaneDragOver] = useState(false);
 
   useEffect(() => {
     if (!lesson) router.push('/lessons');
@@ -157,17 +158,30 @@ function EditorInner() {
       {/* Code lane */}
       <section style={{ padding: '8px 16px' }}>
         <div style={{ fontSize: 18, margin: '8px 0' }}>こーど</div>
-        <div style={{
-          height: 140,
-          borderRadius: 12,
-          background: '#fff',
-          boxShadow: 'inset 0 0 0 2px #E5EAF3',
-          display: 'flex',
-          alignItems: 'center',
-          overflowX: 'auto',
-          gap: 8,
-          padding: 8,
-        }}>
+        <div
+          onDragOver={(e) => {
+            e.preventDefault();
+            setCodeLaneDragOver(true);
+          }}
+          onDragLeave={() => {
+            setCodeLaneDragOver(false);
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            setCodeLaneDragOver(false);
+          }}
+          style={{
+            height: 140,
+            borderRadius: 12,
+            background: codeLaneDragOver ? '#E3F2FD' : '#fff',
+            boxShadow: codeLaneDragOver ? 'inset 0 0 0 3px #4F8EF7' : 'inset 0 0 0 2px #E5EAF3',
+            display: 'flex',
+            alignItems: 'center',
+            overflowX: 'auto',
+            gap: 8,
+            padding: 8,
+            transition: 'background 0.2s, box-shadow 0.2s',
+          }}>
           {program.map((b, i) => (
             <BlockItem
               key={i}

@@ -39,6 +39,14 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
     // 履歴を最大5件に制限
     const newHistory = history.length >= 5 ? [...history.slice(1), prev] : [...history, prev];
     set({ history: newHistory, program: [...prev, b] });
+
+    // ブロック配置音を再生
+    if (typeof window !== 'undefined') {
+      import('../audio/sink').then(({ createWebAudioSink }) => {
+        const audio = createWebAudioSink();
+        audio.play('block_place');
+      }).catch(() => {});
+    }
   },
   addBlockToRepeat(repeatIndex, child) {
     const prev = get().program;
@@ -54,6 +62,14 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
       return block;
     });
     set({ history: newHistory, program: newProgram });
+
+    // ブロック配置音を再生
+    if (typeof window !== 'undefined') {
+      import('../audio/sink').then(({ createWebAudioSink }) => {
+        const audio = createWebAudioSink();
+        audio.play('block_place');
+      }).catch(() => {});
+    }
   },
   moveBlock(fromIndex, toIndex) {
     const prev = get().program;

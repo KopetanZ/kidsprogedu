@@ -15,6 +15,7 @@ type Props = {
 
 export default function BlockItem({ block, onClick, onRemove, showRemove = false, onDropToRepeat, isDraggable = false, onDrop, index }: Props) {
   const [isDragOver, setIsDragOver] = React.useState(false);
+  const [isDragging, setIsDragging] = React.useState(false);
   const labelOf = (b: Block): string => {
     switch (b.block) {
       case 'move_right':
@@ -180,9 +181,13 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
       draggable={isDraggable}
       onDragStart={(e) => {
         if (isDraggable) {
+          setIsDragging(true);
           e.dataTransfer.effectAllowed = 'copy';
           e.dataTransfer.setData('application/json', JSON.stringify(block));
         }
+      }}
+      onDragEnd={() => {
+        setIsDragging(false);
       }}
       style={{
         minWidth: 120,
@@ -197,6 +202,9 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
         cursor: onClick || isDraggable ? 'pointer' : 'default',
         position: 'relative',
         padding: '0 8px',
+        transform: isDragging ? 'scale(1.1)' : 'scale(1)',
+        transition: 'transform 0.2s ease-out',
+        opacity: isDragging ? 0.8 : 1,
       }}
     >
       {labelOf(block)}
