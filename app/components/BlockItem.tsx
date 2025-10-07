@@ -111,7 +111,7 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
           }}
         >
           {hasChildren ? (
-            block.children!.map((child, idx) => (
+            block.children!.map((child: Block, idx: number) => (
               <div
                 key={idx}
                 style={{
