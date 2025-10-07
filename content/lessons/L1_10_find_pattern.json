@@ -8,5 +8,5 @@
     "つぎの レベルで くりかえしブロックを ならうよ。たのしみだね！"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 7, "allowLinearSolution": true }
 }

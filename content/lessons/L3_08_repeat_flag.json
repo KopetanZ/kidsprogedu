@@ -8,5 +8,5 @@
     "はた→くりかえし3→みぎ と はた→くりかえし2→うえ を ためしてね"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 5, "allowLinearSolution": true }
 }

@@ -10,5 +10,5 @@
   "starterCode": [
     { "block": "repeat_n", "n": 3, "children": [{ "block": "move_right", "times": 1 }] }
   ],
-  "accept": { "maxBlocks": 5, "allowLinearSolution": false }
+  "accept": { "maxBlocks": 2, "allowLinearSolution": false }
 }

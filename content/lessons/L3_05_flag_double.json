@@ -8,5 +8,5 @@
     "みぎ1の ブロックを はたブロックに つけて 2かい おしてね"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 8, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 3, "allowLinearSolution": true }
 }

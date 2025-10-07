@@ -8,5 +8,5 @@
     "おなじ うごきが たくさん あるね。つぎの レベルで まとめられるよ"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 15, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 7, "allowLinearSolution": true }
 }

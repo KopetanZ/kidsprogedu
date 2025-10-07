@@ -11,6 +11,6 @@
     { "block": "when_flag" },
     { "block": "move_right", "times": 3 }
   ],
-  "accept": { "maxBlocks": 10, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 3, "allowLinearSolution": true }
 }
 

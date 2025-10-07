@@ -8,5 +8,5 @@
     "くりかえしを つかうと かんたんだよ。あきらめないでね！"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 20, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 10, "allowLinearSolution": true }
 }

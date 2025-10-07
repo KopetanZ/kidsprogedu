@@ -8,5 +8,5 @@
     "みぎ うえ みぎ うえ の パターンを くりかえしで まとめてね"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 5, "allowLinearSolution": true }
 }

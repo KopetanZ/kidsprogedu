@@ -10,6 +10,6 @@
   "starterCode": [
     { "block": "when_flag" }
   ],
-  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
+  "accept": { "maxBlocks": 6, "allowLinearSolution": true }
 }
 

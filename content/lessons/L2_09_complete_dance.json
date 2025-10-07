@@ -8,5 +8,5 @@
     "3つの くりかえしブロックを つかって いろんな うごきを ためしてね"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 10, "allowLinearSolution": false }
+  "accept": { "maxBlocks": 8, "allowLinearSolution": false }
 }

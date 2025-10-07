@@ -13,6 +13,19 @@ import { useAudioStore } from '../../audio/store';
 import type { Block } from '../../../core/blocks/schemas';
 import voice from '../../../content/voice/ja.json';
 
+// ブロック数をカウントする関数（再帰的に子ブロックもカウント）
+const countBlocks = (blocks: Block[]): number => {
+  let count = 0;
+  for (const block of blocks) {
+    if (block.block === 'when_flag') continue; // when_flagはカウントしない
+    count += 1;
+    if (block.block === 'repeat_n' && block.children) {
+      count += countBlocks(block.children);
+    }
+  }
+  return count;
+};
+
 // ブロック定義（toolbox ID から Block への変換）
 const createBlockFromToolbox = (id: string): Block[] => {
   switch (id) {
@@ -100,6 +113,14 @@ function EditorInner() {
         const filteredProgram = program.filter((b) => b.block !== 'when_flag');
         if (filteredProgram.length === 0) {
           hint(voice.common.empty_program);
+          return;
+        }
+
+        // ブロック数チェック
+        const blockCount = countBlocks(program);
+        const maxBlocks = lesson.accept?.maxBlocks;
+        if (maxBlocks && blockCount > maxBlocks) {
+          hint(`ブロックが おおすぎるよ！${maxBlocks}こ いかで ゴールしてね（いま ${blockCount}こ）`);
           return;
         }
 

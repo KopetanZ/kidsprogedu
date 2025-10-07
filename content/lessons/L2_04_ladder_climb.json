@@ -21,7 +21,7 @@
     }
   ],
   "accept": {
-    "maxBlocks": 10,
+    "maxBlocks": 3,
     "allowLinearSolution": true
   }
 }

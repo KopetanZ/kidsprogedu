@@ -8,5 +8,5 @@
     "くりかえし2の なかに、くりかえし2（みぎ1 うえ1）を いれてみよう"
   ],
   "starterCode": [],
-  "accept": { "maxBlocks": 6, "allowLinearSolution": false }
+  "accept": { "maxBlocks": 4, "allowLinearSolution": false }
 }
