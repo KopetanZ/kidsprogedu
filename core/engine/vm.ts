@@ -111,18 +111,47 @@ export class VM {
 
   private executeNode(node: Block) {
     switch (node.block) {
-      case 'move_right':
-        this.moveNTimes({ dx: 1, dy: 0 }, node.times ?? 1);
+      case 'move_right': {
+        const times = node.times ?? 1;
+        if (times > 1) {
+          // Expand into multiple single moves for animation
+          const moves: Block[] = Array(times).fill({ block: 'move_right', times: 1 });
+          this.state.frames.push({ kind: 'seq', nodes: moves, index: 0 });
+        } else {
+          this.moveOnce({ dx: 1, dy: 0 });
+        }
         break;
-      case 'move_left':
-        this.moveNTimes({ dx: -1, dy: 0 }, node.times ?? 1);
+      }
+      case 'move_left': {
+        const times = node.times ?? 1;
+        if (times > 1) {
+          const moves: Block[] = Array(times).fill({ block: 'move_left', times: 1 });
+          this.state.frames.push({ kind: 'seq', nodes: moves, index: 0 });
+        } else {
+          this.moveOnce({ dx: -1, dy: 0 });
+        }
         break;
-      case 'move_up':
-        this.moveNTimes({ dx: 0, dy: -1 }, node.times ?? 1);
+      }
+      case 'move_up': {
+        const times = node.times ?? 1;
+        if (times > 1) {
+          const moves: Block[] = Array(times).fill({ block: 'move_up', times: 1 });
+          this.state.frames.push({ kind: 'seq', nodes: moves, index: 0 });
+        } else {
+          this.moveOnce({ dx: 0, dy: -1 });
+        }
         break;
-      case 'move_down':
-        this.moveNTimes({ dx: 0, dy: 1 }, node.times ?? 1);
+      }
+      case 'move_down': {
+        const times = node.times ?? 1;
+        if (times > 1) {
+          const moves: Block[] = Array(times).fill({ block: 'move_down', times: 1 });
+          this.state.frames.push({ kind: 'seq', nodes: moves, index: 0 });
+        } else {
+          this.moveOnce({ dx: 0, dy: 1 });
+        }
         break;
+      }
       case 'repeat_n': {
         const n = node.n ?? 2;
         const children = node.children ?? [];
@@ -156,12 +185,9 @@ export class VM {
     }
   }
 
-  private moveNTimes(delta: { dx: number; dy: number }, times: number) {
-    const steps = Math.max(0, times | 0);
-    for (let i = 0; i < steps && this.state.executedThisTick < this.maxPerTick; i++) {
-      const next = { x: this.state.pos.x + delta.dx, y: this.state.pos.y + delta.dy };
-      this.state.pos = clampToGrid(next, this.state.grid);
-      this.state.executedThisTick += 1;
-    }
+  private moveOnce(delta: { dx: number; dy: number }) {
+    const next = { x: this.state.pos.x + delta.dx, y: this.state.pos.y + delta.dy };
+    this.state.pos = clampToGrid(next, this.state.grid);
+    this.state.executedThisTick += 1;
   }
 }

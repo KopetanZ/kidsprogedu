@@ -110,7 +110,7 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
     const { useAudioStore } = await import('../audio/store');
     const muted = useAudioStore.getState().muted;
     const audio = muted ? undefined : createWebAudioSink();
-    const runtime = new Runtime({ goal: lesson.goal, maxInstructionsPerTick: 10, audio });
+    const runtime = new Runtime({ goal: lesson.goal, maxInstructionsPerTick: 1, audio });
     runtime.load(program);
     set({ _runtime: runtime, isRunning: true });
 
