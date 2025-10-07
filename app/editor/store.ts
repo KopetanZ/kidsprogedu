@@ -122,8 +122,11 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
         const s = st.getState();
         set({ pos: s.pos });
         if (s.running) {
-          const raf = requestAnimationFrame(tick);
-          set({ _raf: raf });
+          // Add 200ms delay between steps for visibility
+          const timeoutId = setTimeout(() => {
+            const raf = requestAnimationFrame(tick);
+            set({ _raf: raf });
+          }, 200);
         } else {
           set({ isRunning: false, _raf: undefined, _runtime: undefined });
           resolve(s.pos.x === lesson.goal.x && s.pos.y === lesson.goal.y);
