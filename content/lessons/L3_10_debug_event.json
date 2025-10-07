@@ -1,16 +1,15 @@
 {
   "id": "L3_10_debug_event",
   "title": "イベントの まちがいを なおそう",
-  "description": "プログラムに まちがいが あるよ。なおしてね",
-  "difficulty": 3,
-  "goal": { "x": 3, "y": 1 },
+  "goal": { "type": "reach", "x": 3, "y": 1 },
   "toolbox": ["move_right", "move_left", "when_flag"],
+  "hints": [
+    "いま ひだりに うごいているね。ゴールは どっちかな？",
+    "ひだりを みぎに かえてみよう"
+  ],
   "starterCode": [
     { "block": "when_flag" },
     { "block": "move_left", "times": 3 }
   ],
-  "hints": {
-    "start": "いま ひだりに うごいているね。ゴールは どっちかな？",
-    "stuck": "ひだりを みぎに かえてみよう"
-  }
+  "accept": { "maxBlocks": 5, "allowLinearSolution": true }
 }

@@ -12,7 +12,7 @@ type Props = {
 
 export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5, pos, goal }: Props) {
   const ref = useRef<HTMLCanvasElement | null>(null);
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number | undefined>(undefined);
 
   // メモ化: グリッド計算を事前に実行
   const gridLayout = useMemo(() => {

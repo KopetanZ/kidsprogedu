@@ -1,13 +1,12 @@
 {
   "id": "L2_12_double_loop",
   "title": "にじゅう くりかえし",
-  "description": "くりかえしの なかに くりかえしを いれてみよう！",
-  "difficulty": 2,
-  "goal": { "x": 5, "y": 4 },
+  "goal": { "type": "reach", "x": 5, "y": 4 },
   "toolbox": ["move_right", "move_up", "repeat_n"],
+  "hints": [
+    "おおきな くりかえしの なかに ちいさな くりかえしを いれるよ",
+    "くりかえし2の なかに、くりかえし2（みぎ1 うえ1）を いれてみよう"
+  ],
   "starterCode": [],
-  "hints": {
-    "start": "おおきな くりかえしの なかに ちいさな くりかえしを いれるよ",
-    "stuck": "くりかえし2の なかに、くりかえし2（みぎ1 うえ1）を いれてみよう"
-  }
+  "accept": { "maxBlocks": 6, "allowLinearSolution": false }
 }

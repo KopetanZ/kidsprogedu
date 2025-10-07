@@ -1,13 +1,12 @@
 {
   "id": "L1_09_long_path",
   "title": "ながい みちを あるこう",
-  "description": "たくさんの ブロックを つかって ゴールまで いこう",
-  "difficulty": 1,
-  "goal": { "x": 6, "y": 4 },
+  "goal": { "type": "reach", "x": 6, "y": 4 },
   "toolbox": ["move_right", "move_up", "move_left", "move_down"],
+  "hints": [
+    "みぎ うえ みぎ うえ の じゅんばんで すすんでみよう",
+    "おなじ うごきが たくさん あるね。つぎの レベルで まとめられるよ"
+  ],
   "starterCode": [],
-  "hints": {
-    "start": "みぎ うえ みぎ うえ の じゅんばんで すすんでみよう",
-    "stuck": "おなじ うごきが たくさん あるね。つぎの レベルで まとめられるよ"
-  }
+  "accept": { "maxBlocks": 15, "allowLinearSolution": true }
 }

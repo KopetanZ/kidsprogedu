@@ -1,13 +1,12 @@
 {
   "id": "L2_09_complete_dance",
   "title": "ダンスを かんせいさせよう",
-  "description": "3つの くりかえしを つかって ダンスを おどろう",
-  "difficulty": 2,
-  "goal": { "x": 1, "y": 1 },
+  "goal": { "type": "reach", "x": 1, "y": 1 },
   "toolbox": ["move_right", "move_left", "move_up", "move_down", "repeat_n", "play_sound"],
+  "hints": [
+    "みぎ ひだり うえ した を くりかえして リズムを つくろう",
+    "3つの くりかえしブロックを つかって いろんな うごきを ためしてね"
+  ],
   "starterCode": [],
-  "hints": {
-    "start": "みぎ ひだり うえ した を くりかえして リズムを つくろう",
-    "stuck": "3つの くりかえしブロックを つかって いろんな うごきを ためしてね"
-  }
+  "accept": { "maxBlocks": 10, "allowLinearSolution": false }
 }

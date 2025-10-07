@@ -1,13 +1,12 @@
 {
   "id": "L4_08_final_challenge",
   "title": "さいごの チャレンジ",
-  "description": "これが さいごの もんだいだよ。じぶんの ちからで やってみよう！",
-  "difficulty": 4,
-  "goal": { "x": 8, "y": 5 },
+  "goal": { "type": "reach", "x": 8, "y": 5 },
   "toolbox": ["move_right", "move_up", "move_left", "move_down", "repeat_n", "play_sound", "when_flag"],
+  "hints": [
+    "いままで ならった ことを ぜんぶ つかおう！きみなら できる！",
+    "じぶんで かんがえることが いちばん だいじだよ。がんばって！"
+  ],
   "starterCode": [],
-  "hints": {
-    "start": "いままで ならった ことを ぜんぶ つかおう！きみなら できる！",
-    "stuck": "じぶんで かんがえることが いちばん だいじだよ。がんばって！"
-  }
+  "accept": { "maxBlocks": 30, "allowLinearSolution": true }
 }

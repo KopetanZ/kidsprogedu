@@ -1,13 +1,12 @@
 {
   "id": "L2_11_nest_intro",
   "title": "くりかえしの なかに いれよう",
-  "description": "くりかえしの なかに ブロックを ドラッグして いれてみよう",
-  "difficulty": 2,
-  "goal": { "x": 4, "y": 3 },
+  "goal": { "type": "reach", "x": 4, "y": 3 },
   "toolbox": ["move_right", "move_up", "repeat_n"],
+  "hints": [
+    "くりかえしブロックに みぎと うえを いれられるよ",
+    "くりかえし2の なかに みぎ1と うえ1を いれてみよう"
+  ],
   "starterCode": [],
-  "hints": {
-    "start": "くりかえしブロックに みぎと うえを いれられるよ",
-    "stuck": "くりかえし2の なかに みぎ1と うえ1を いれてみよう"
-  }
+  "accept": { "maxBlocks": 8, "allowLinearSolution": false }
 }

@@ -1,13 +1,12 @@
 {
   "id": "L1_10_find_pattern",
   "title": "おなじ うごきを さがそう",
-  "description": "くりかえしが あるね。つぎは もっと かんたんに できるよ！",
-  "difficulty": 1,
-  "goal": { "x": 7, "y": 3 },
+  "goal": { "type": "reach", "x": 7, "y": 3 },
   "toolbox": ["move_right", "move_up"],
+  "hints": [
+    "みぎ うえ みぎ うえ みぎ うえ って おなじだね",
+    "つぎの レベルで くりかえしブロックを ならうよ。たのしみだね！"
+  ],
   "starterCode": [],
-  "hints": {
-    "start": "みぎ うえ みぎ うえ みぎ うえ って おなじだね",
-    "stuck": "つぎの レベルで くりかえしブロックを ならうよ。たのしみだね！"
-  }
+  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
 }

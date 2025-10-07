@@ -1,13 +1,12 @@
 {
   "id": "L3_09_reach_goal",
   "title": "ゴールまで たどりつこう",
-  "description": "はたと くりかえしを つかって むずかしい みちを すすもう",
-  "difficulty": 3,
-  "goal": { "x": 6, "y": 5 },
+  "goal": { "type": "reach", "x": 6, "y": 5 },
   "toolbox": ["move_right", "move_up", "move_down", "repeat_n", "when_flag"],
+  "hints": [
+    "はたブロックと くりかえしを くみあわせよう",
+    "みぎ うえ みぎ うえ の パターンを くりかえしで まとめてね"
+  ],
   "starterCode": [],
-  "hints": {
-    "start": "はたブロックと くりかえしを くみあわせよう",
-    "stuck": "みぎ うえ みぎ うえ の パターンを くりかえしで まとめてね"
-  }
+  "accept": { "maxBlocks": 12, "allowLinearSolution": true }
 }
