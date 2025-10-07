@@ -189,5 +189,7 @@ export class VM {
     const next = { x: this.state.pos.x + delta.dx, y: this.state.pos.y + delta.dy };
     this.state.pos = clampToGrid(next, this.state.grid);
     this.state.executedThisTick += 1;
+    // 移動時の効果音
+    this.audio?.play('move');
   }
 }

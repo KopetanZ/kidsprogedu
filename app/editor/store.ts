@@ -128,8 +128,13 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
             set({ _raf: raf });
           }, 200);
         } else {
+          const cleared = s.pos.x === lesson.goal.x && s.pos.y === lesson.goal.y;
+          if (cleared && audio) {
+            // ゴール到達時の効果音
+            audio.play('goal');
+          }
           set({ isRunning: false, _raf: undefined, _runtime: undefined });
-          resolve(s.pos.x === lesson.goal.x && s.pos.y === lesson.goal.y);
+          resolve(cleared);
         }
       };
       const raf = requestAnimationFrame(tick);
