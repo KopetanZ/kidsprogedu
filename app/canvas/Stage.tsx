@@ -9,11 +9,20 @@ type Props = {
   pos: { x: number; y: number };
   goal: { x: number; y: number };
   instruction?: string; // ゴール地点の吹き出しメッセージ
+  direction?: 'right' | 'left' | 'up' | 'down'; // ネコの向き
 };
 
-export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5, pos, goal, instruction }: Props) {
+export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5, pos, goal, instruction, direction = 'right' }: Props) {
   const ref = useRef<HTMLCanvasElement | null>(null);
   const rafRef = useRef<number | undefined>(undefined);
+  const prevPosRef = useRef(pos);
+  const [showInstruction, setShowInstruction] = React.useState(false);
+
+  // 吹き出しのアニメーション
+  React.useEffect(() => {
+    const timer = setTimeout(() => setShowInstruction(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   // メモ化: グリッド計算を事前に実行
   const gridLayout = useMemo(() => {
@@ -89,8 +98,29 @@ export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5,
       ctx.shadowOffsetX = 2;
       ctx.shadowOffsetY = 2;
 
+      // 移動方向を判定してネコの絵文字を選択
+      const prevPos = prevPosRef.current;
+      let catEmoji = '🐱'; // デフォルト（右向き）
+
+      if (pos.x > prevPos.x) {
+        catEmoji = '🐱'; // 右向き
+      } else if (pos.x < prevPos.x) {
+        catEmoji = '🐈'; // 左向き（反転）
+      } else if (pos.y < prevPos.y) {
+        catEmoji = '😺'; // 上向き
+      } else if (pos.y > prevPos.y) {
+        catEmoji = '😸'; // 下向き
+      }
+
+      // ゴールに到達したら喜ぶネコ
+      if (pos.x === goal.x && pos.y === goal.y) {
+        catEmoji = '😻'; // 喜ぶネコ
+      }
+
+      prevPosRef.current = pos;
+
       // 猫の絵文字を描画
-      ctx.fillText('🐱', p.x, p.y);
+      ctx.fillText(catEmoji, p.x, p.y);
 
       // 影をリセット
       ctx.shadowColor = 'transparent';
@@ -140,6 +170,9 @@ export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5,
           maxWidth: 200,
           pointerEvents: 'none',
           zIndex: 10,
+          opacity: showInstruction ? 1 : 0,
+          transform: showInstruction ? 'translateY(0) scale(1)' : 'translateY(-10px) scale(0.9)',
+          transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
         }}>
           {instruction}
           {/* 吹き出しの三角形 */}

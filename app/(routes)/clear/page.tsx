@@ -6,15 +6,57 @@ import Button from '../../components/Button';
 import voice from '../../../content/voice/ja.json';
 import { lessons } from '../../../content/lessons';
 
+// 星のパーティクル型
+type Star = {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  delay: number;
+  duration: number;
+};
+
 function ClearInner() {
   const params = useSearchParams();
   const router = useRouter();
   const [show, setShow] = useState(false);
+  const [stars, setStars] = useState<Star[]>([]);
   const lessonId = params.get('lessonId');
 
   useEffect(() => {
     // 花丸アニメーション用
     setTimeout(() => setShow(true), 100);
+
+    // 星のパーティクル生成
+    const starArray: Star[] = [];
+    for (let i = 0; i < 30; i++) {
+      starArray.push({
+        id: i,
+        x: Math.random() * 100,
+        y: -20,
+        size: Math.random() * 20 + 15,
+        delay: Math.random() * 1.5,
+        duration: Math.random() * 2 + 2,
+      });
+    }
+    setStars(starArray);
+
+    // クリア音を再生
+    if (typeof window !== 'undefined') {
+      const playSuccessSound = async () => {
+        try {
+          const { createWebAudioSink } = await import('../../audio/sink');
+          const audio = createWebAudioSink();
+          // 連続して音を鳴らす
+          setTimeout(() => audio.play('goal'), 0);
+          setTimeout(() => audio.play('goal'), 200);
+          setTimeout(() => audio.play('goal'), 400);
+        } catch (e) {
+          console.error('Audio error:', e);
+        }
+      };
+      playSuccessSound();
+    }
   }, []);
 
   // 次のレッスンを提案
@@ -22,15 +64,36 @@ function ClearInner() {
   const nextLesson = currentIndex >= 0 && currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : null;
 
   return (
-    <main style={{
-      padding: 24,
-      background: '#F5F7FB',
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}>
+    <>
+      <style jsx>{`
+        @keyframes fallStar {
+          0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(400px) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        @keyframes bounce {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+        }
+      `}</style>
+      <main style={{
+        padding: 24,
+        background: '#F5F7FB',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       {/* 花丸アニメーション */}
       <div style={{
         width: '100%',
@@ -47,12 +110,30 @@ function ClearInner() {
         position: 'relative',
         overflow: 'hidden',
       }}>
+        {/* 星のパーティクル */}
+        {stars.map((star) => (
+          <div
+            key={star.id}
+            style={{
+              position: 'absolute',
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              fontSize: star.size,
+              opacity: 0,
+              animation: `fallStar ${star.duration}s ease-in ${star.delay}s forwards`,
+              pointerEvents: 'none',
+            }}
+          >
+            ⭐
+          </div>
+        ))}
         {/* 花丸 */}
         <div style={{
           fontSize: 120,
           marginBottom: 24,
           transform: show ? 'scale(1) rotate(0deg)' : 'scale(0) rotate(-180deg)',
           transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          animation: show ? 'bounce 0.5s ease-in-out 0.8s 2' : 'none',
         }}>
           🌸
         </div>
@@ -134,7 +215,8 @@ function ClearInner() {
           </Button>
         </Link>
       </div>
-    </main>
+      </main>
+    </>
   );
 }
 
