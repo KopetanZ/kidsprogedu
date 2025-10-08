@@ -333,8 +333,8 @@ function EditorInner() {
         </section>
       )}
 
-      {/* Code lane (通常のdrillモード) */}
-      {(!lesson?.type || lesson.type === 'drill') && (
+      {/* Code lane (drill/danceモード) */}
+      {(!lesson?.type || lesson.type === 'drill' || lesson.type === 'dance') && (
         <section style={{ padding: isMobile ? '6px 12px' : '8px 16px' }}>
           <div style={{ fontSize: isMobile ? 16 : 18, margin: isMobile ? '6px 0' : '8px 0' }}>こーど</div>
           <div
@@ -390,8 +390,8 @@ function EditorInner() {
         </section>
       )}
 
-      {/* Palette (drillモードのみ) */}
-      {(!lesson?.type || lesson.type === 'drill') && (
+      {/* Palette (drill/danceモード) */}
+      {(!lesson?.type || lesson.type === 'drill' || lesson.type === 'dance') && (
         <section style={{ padding: isMobile ? '6px 12px 16px' : '8px 16px 24px' }}>
           <div style={{ fontSize: isMobile ? 16 : 18, margin: isMobile ? '6px 0' : '8px 0' }}>
             ぶろっく
