@@ -13,9 +13,10 @@ type Props = {
   onDrop?: (droppedBlock: Block) => void;
   index?: number;
   isCurrentBlock?: boolean; // For step execution highlighting
+  isSelected?: boolean; // For repeat block selection mode
 };
 
-export default function BlockItem({ block, onClick, onRemove, showRemove = false, onDropToRepeat, isDraggable = false, onDrop, index, isCurrentBlock = false }: Props) {
+export default function BlockItem({ block, onClick, onRemove, showRemove = false, onDropToRepeat, isDraggable = false, onDrop, index, isCurrentBlock = false, isSelected = false }: Props) {
   const isMobile = useMobile();
   const [isDragOver, setIsDragOver] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
@@ -60,6 +61,7 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
 
     return (
       <div
+        onClick={onClick}
         style={{
           minWidth: isMobile ? 100 : 140,
           borderRadius: isMobile ? 8 : 12,
@@ -67,8 +69,9 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
           color: '#1F2430',
           position: 'relative',
           padding: isMobile ? 6 : 8,
-          boxShadow: isCurrentBlock ? '0 0 0 3px #4F8EF7' : 'none',
+          boxShadow: isCurrentBlock ? '0 0 0 3px #4F8EF7' : isSelected ? '0 0 0 3px #FFB74D' : 'none',
           transition: 'box-shadow 0.3s',
+          cursor: onClick ? 'pointer' : 'default',
         }}
       >
         {/* ヘッダー */}

@@ -84,6 +84,7 @@ function EditorInner() {
   const [showGuide, setShowGuide] = useState(false);
   const [codeLaneDragOver, setCodeLaneDragOver] = useState(false);
   const [completedSubgoals, setCompletedSubgoals] = useState<string[]>([]);
+  const [selectedRepeatIndex, setSelectedRepeatIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (!lesson) router.push('/lessons');
@@ -312,6 +313,15 @@ function EditorInner() {
               onRemove={() => removeBlock(i)}
               onDropToRepeat={b.block === 'repeat_n' ? (child) => addBlockToRepeat(i, child) : undefined}
               isCurrentBlock={isStepMode && currentBlockIndex === i}
+              isSelected={selectedRepeatIndex === i}
+              onClick={b.block === 'repeat_n' ? () => {
+                if (selectedRepeatIndex === i) {
+                  setSelectedRepeatIndex(null);
+                } else {
+                  setSelectedRepeatIndex(i);
+                  hint('つぎに タップした ブロックを くりかえしの なかに いれるよ！');
+                }
+              } : undefined}
             />
           ))}
           <Button aria-label="けす" variant="ghost" onClick={removeLast}>
@@ -327,10 +337,30 @@ function EditorInner() {
       {/* Palette (drillモードのみ) */}
       {(!lesson?.type || lesson.type === 'drill') && (
         <section style={{ padding: isMobile ? '6px 12px 16px' : '8px 16px 24px' }}>
-          <div style={{ fontSize: isMobile ? 16 : 18, margin: isMobile ? '6px 0' : '8px 0' }}>ぶろっく</div>
+          <div style={{ fontSize: isMobile ? 16 : 18, margin: isMobile ? '6px 0' : '8px 0' }}>
+            ぶろっく
+            {selectedRepeatIndex !== null && (
+              <span style={{ marginLeft: 8, color: '#4F8EF7', fontSize: isMobile ? 14 : 16 }}>
+                （くりかえしに いれるモード）
+              </span>
+            )}
+          </div>
           <div style={{ display: 'flex', gap: isMobile ? 6 : 8, overflowX: 'auto', paddingBottom: isMobile ? 6 : 8 }}>
             {palette.map((b, idx) => (
-              <BlockItem key={idx} block={b} onClick={() => addBlock(b)} isDraggable={!isMobile} />
+              <BlockItem
+                key={idx}
+                block={b}
+                onClick={() => {
+                  if (selectedRepeatIndex !== null && b.block !== 'repeat_n') {
+                    addBlockToRepeat(selectedRepeatIndex, b);
+                    setSelectedRepeatIndex(null);
+                    hint('くりかえしに ブロックを いれたよ！');
+                  } else {
+                    addBlock(b);
+                  }
+                }}
+                isDraggable={!isMobile}
+              />
             ))}
           </div>
         </section>
