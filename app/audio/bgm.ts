@@ -83,7 +83,7 @@ export class BGMPlayer {
       const gain = this.ctx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.value = notes[index % notes.length];
+      osc.frequency.value = notes[index % notes.length] ?? 440;
       gain.gain.setValueAtTime(0.02, this.ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 2);
 
