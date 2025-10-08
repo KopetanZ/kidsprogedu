@@ -16,9 +16,11 @@ export default function ParsonsEditor({ fragments, correctOrder, onCheck, onComp
     const indices = fragments.map((_, i) => i);
     for (let i = indices.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [indices[i], indices[j]] = [indices[j], indices[i]];
+      const temp = indices[i]!;
+      indices[i] = indices[j]!;
+      indices[j] = temp;
     }
-    return indices.map(i => ({ block: fragments[i], originalIndex: i }));
+    return indices.map(i => ({ block: fragments[i]!, originalIndex: i }));
   });
 
   const [workArea, setWorkArea] = useState<typeof shuffledFragments>([]);
@@ -42,7 +44,9 @@ export default function ParsonsEditor({ fragments, correctOrder, onCheck, onComp
   const moveUp = (index: number) => {
     if (index === 0) return;
     const newWork = [...workArea];
-    [newWork[index - 1], newWork[index]] = [newWork[index], newWork[index - 1]];
+    const temp = newWork[index - 1]!;
+    newWork[index - 1] = newWork[index]!;
+    newWork[index] = temp;
     setWorkArea(newWork);
     setFeedback(null);
   };
@@ -50,7 +54,9 @@ export default function ParsonsEditor({ fragments, correctOrder, onCheck, onComp
   const moveDown = (index: number) => {
     if (index === workArea.length - 1) return;
     const newWork = [...workArea];
-    [newWork[index], newWork[index + 1]] = [newWork[index + 1], newWork[index]];
+    const temp = newWork[index]!;
+    newWork[index] = newWork[index + 1]!;
+    newWork[index + 1] = temp;
     setWorkArea(newWork);
     setFeedback(null);
   };
