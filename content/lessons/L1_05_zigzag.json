@@ -5,15 +5,20 @@
   "skills": ["sequence"],
   "difficulty": 1,
   "estimatedTimeMin": 4,
-  "goal": { "type": "reach", "x": 3, "y": 3 },
+  "goal": {
+    "type": "path",
+    "endPosition": { "x": 3, "y": 3 },
+    "pathPattern": "zigzag"
+  },
   "toolbox": ["when_flag", "move_right", "move_down"],
   "hints": [
     "みぎと したを こうごに つかってみよう",
-    "みぎ した みぎ した の じゅんばんで おいてみてね"
+    "みぎ した みぎ した の じゅんばんで おいてみてね",
+    "ジグザグの かたちを つくろう"
   ],
   "starterCode": [
     { "block": "when_flag" }
   ],
   "accept": { "maxBlocks": 5, "allowLinearSolution": true },
-  "instruction": "ジグザグに すすもう！⚡"
+  "instruction": "ジグザグの かたちで すすもう！⚡"
 }

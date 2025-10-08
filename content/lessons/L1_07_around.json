@@ -1,15 +1,20 @@
 {
   "id": "L1_07_around",
   "title": "ぐるっと まわろう",
-  "goal": { "type": "reach", "x": 1, "y": 1 },
+  "goal": {
+    "type": "path",
+    "endPosition": { "x": 1, "y": 1 },
+    "pathPattern": "square"
+  },
   "toolbox": ["when_flag", "move_right", "move_up", "move_left", "move_down"],
   "hints": [
-    "4つの ほうこうを つかって まるく うごこう",
-    "みぎ→うえ→ひだり→した の じゅんばんで もとに もどれるよ"
+    "4つの ほうこうを つかって しかくに うごこう",
+    "みぎ→うえ→ひだり→した の じゅんばんで もとに もどれるよ",
+    "しかくの かたちを つくろう"
   ],
   "starterCode": [
     { "block": "when_flag" }
   ],
   "accept": { "maxBlocks": 5, "allowLinearSolution": true },
-  "instruction": "ぐるっと まわって もどろう！🔄"
+  "instruction": "しかくを えがいて もどろう！🔄"
 }

@@ -5,6 +5,7 @@ import TopBar from '../../components/TopBar';
 import Button from '../../components/Button';
 import BlockItem from '../../components/BlockItem';
 import Stage from '../../canvas/Stage';
+import RobotStage from '../../canvas/RobotStage';
 import SubgoalList from '../../components/SubgoalList';
 import ParsonsEditor from '../../components/ParsonsEditor';
 import DebugEditor from '../../components/DebugEditor';
@@ -66,6 +67,37 @@ const createBlockFromToolbox = (id: string): Block[] => {
       return [{ block: 'play_sound' }];
     case 'when_flag':
       return []; // when_flag は自動追加されるので不要
+    // Dance blocks
+    case 'move_right_arm':
+      return [
+        { block: 'move_right_arm', angle: 45 },
+        { block: 'move_right_arm', angle: 90 },
+        { block: 'move_right_arm', angle: 135 },
+      ];
+    case 'move_left_arm':
+      return [
+        { block: 'move_left_arm', angle: 45 },
+        { block: 'move_left_arm', angle: 90 },
+        { block: 'move_left_arm', angle: 135 },
+      ];
+    case 'move_right_leg':
+      return [
+        { block: 'move_right_leg', angle: 30 },
+        { block: 'move_right_leg', angle: 60 },
+      ];
+    case 'move_left_leg':
+      return [
+        { block: 'move_left_leg', angle: 30 },
+        { block: 'move_left_leg', angle: 60 },
+      ];
+    case 'move_head':
+      return [
+        { block: 'move_head', angle: -30 },
+        { block: 'move_head', angle: 0 },
+        { block: 'move_head', angle: 30 },
+      ];
+    case 'pose_reset':
+      return [{ block: 'pose_reset' }];
     default:
       return [];
   }
@@ -77,7 +109,7 @@ function EditorInner() {
   const isMobile = useMobile();
   const lessonId = params.get('lessonId') ?? 'L1_01_go_right';
   const lesson = lessonMap[lessonId];
-  const { setLesson, program, addBlock, addBlockToRepeat, removeBlock, removeLast, undo, run, reset, hint, pos, hintText, runAnimated, isRunning, isStepMode, isPaused, currentStepIndex, currentBlockIndex, startStepMode, stepNext, stepPrevious, pauseStep, resumeStep, stopStepMode } = useEditorStore();
+  const { setLesson, program, addBlock, addBlockToRepeat, removeBlock, removeLast, undo, run, reset, hint, pos, hintText, runAnimated, isRunning, isStepMode, isPaused, currentStepIndex, currentBlockIndex, startStepMode, stepNext, stepPrevious, pauseStep, resumeStep, stopStepMode, robotPose, robotMoves, visitedPath } = useEditorStore();
   const { startLesson, runPressed, hintTap, clearLesson } = useTelemetry();
   const saveStore = useSaveStore;
   const { muted, toggle } = useAudioStore();
@@ -201,9 +233,33 @@ function EditorInner() {
 
       {/* Stage */}
       <section style={{ padding: isMobile ? 12 : 16 }}>
-        <Stage pos={pos} goal={lesson?.goal ?? { x: 4, y: 1 }} instruction={lesson?.instruction} />
-        {hintText && (
-          <div style={{ marginTop: 8, fontSize: isMobile ? 16 : 18, color: '#1F2430' }}>{hintText}</div>
+        {/* Robot Stage for dance lessons */}
+        {lesson?.type === 'dance' && (
+          <>
+            <RobotStage
+              pose={robotPose ?? { rightArm: 0, leftArm: 0, rightLeg: 0, leftLeg: 0, head: 0 }}
+              instruction={lesson?.instruction}
+              movesCount={robotMoves}
+            />
+            {hintText && (
+              <div style={{ marginTop: 8, fontSize: isMobile ? 16 : 18, color: '#1F2430' }}>{hintText}</div>
+            )}
+          </>
+        )}
+
+        {/* Original Stage for grid-based lessons */}
+        {lesson?.type !== 'dance' && (
+          <>
+            <Stage
+              pos={pos}
+              goal={{ x: (lesson as any)?.goal?.x ?? (lesson as any)?.goal?.endPosition?.x ?? 4, y: (lesson as any)?.goal?.y ?? (lesson as any)?.goal?.endPosition?.y ?? 1 }}
+              instruction={lesson?.instruction}
+              visitedPath={visitedPath}
+            />
+            {hintText && (
+              <div style={{ marginTop: 8, fontSize: isMobile ? 16 : 18, color: '#1F2430' }}>{hintText}</div>
+            )}
+          </>
         )}
       </section>
 

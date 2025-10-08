@@ -13,9 +13,13 @@ type EditorState = {
   currentStepIndex: number;
   currentBlockIndex?: number;
   pos: { x: number; y: number };
+  visitedPath?: { x: number; y: number }[];
+  robotPose?: import('../../core/engine/robot-runtime').RobotPose;
+  robotMoves?: number;
   hintText?: string;
   _raf?: number;
   _runtime?: import('../../core/engine/runtime').Runtime;
+  _robotRuntime?: import('../../core/engine/robot-runtime').RobotRuntime;
   setLesson: (lesson: Lesson) => void;
   addBlock: (b: Block) => void;
   addBlockToRepeat: (repeatIndex: number, child: Block) => void;
@@ -43,6 +47,8 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
   isPaused: false,
   currentStepIndex: 0,
   pos: { x: 1, y: 1 },
+  robotPose: { rightArm: 0, leftArm: 0, rightLeg: 0, leftLeg: 0, head: 0 },
+  robotMoves: 0,
   setLesson(lesson) {
     set({ lesson, program: lesson.starterCode.slice(), pos: { x: 1, y: 1 } });
   },
@@ -122,26 +128,72 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
     const lesson = get().lesson;
     if (!lesson) return false;
     const program: Block[] = [{ block: 'when_flag' }, ...get().program.filter((b) => b.block !== 'when_flag')];
-    const r = new Runtime({ goal: lesson.goal });
+    const r = new Runtime({ goal: lesson.goal as any });
     r.load(program);
     r.runUntilIdle(256);
     const s = r.getState();
     set({ pos: s.pos, isRunning: false });
-    return s.pos.x === lesson.goal.x && s.pos.y === lesson.goal.y;
+    return s.pos.x === (lesson.goal as any).x && s.pos.y === (lesson.goal as any).y;
   },
   async runAnimated() {
     const lesson = get().lesson;
     if (!lesson) return false;
-    // Prepare program
+
+    // Check if this is a dance lesson
+    if (lesson.type === 'dance' && lesson.goal.type === 'dance') {
+      const program: Block[] = [{ block: 'when_flag' }, ...get().program.filter((b) => b.block !== 'when_flag')];
+      const { RobotRuntime } = await import('../../core/engine/robot-runtime');
+      const { createWebAudioSink } = await import('../audio/sink');
+      const { useAudioStore } = await import('../audio/store');
+      const muted = useAudioStore.getState().muted;
+      const audio = muted ? undefined : createWebAudioSink();
+      const robotRuntime = new RobotRuntime({ goal: lesson.goal, maxInstructionsPerTick: 1, audio });
+      robotRuntime.load(program);
+      set({ _robotRuntime: robotRuntime, isRunning: true });
+
+      return new Promise<boolean>((resolve) => {
+        const tick = () => {
+          const rt = get()._robotRuntime;
+          if (!rt) { set({ isRunning: false, _raf: undefined }); resolve(false); return; }
+          rt.step();
+          const s = rt.getState();
+          set({ robotPose: s.pose, robotMoves: s.moves });
+          if (s.running) {
+            setTimeout(() => {
+              const raf = requestAnimationFrame(tick);
+              set({ _raf: raf });
+            }, 300);
+          } else {
+            const cleared = rt.checkComplete();
+            if (cleared && audio) {
+              audio.play('goal');
+            }
+            set({ isRunning: false, _raf: undefined, _robotRuntime: undefined });
+            resolve(cleared);
+          }
+        };
+        const raf = requestAnimationFrame(tick);
+        set({ _raf: raf });
+      });
+    }
+
+    // Original grid-based runtime
     const program: Block[] = [{ block: 'when_flag' }, ...get().program.filter((b) => b.block !== 'when_flag')];
     const { Runtime } = await import('../../core/engine/runtime');
     const { createWebAudioSink } = await import('../audio/sink');
     const { useAudioStore } = await import('../audio/store');
     const muted = useAudioStore.getState().muted;
     const audio = muted ? undefined : createWebAudioSink();
+
+    if (lesson.goal.type !== 'reach' && lesson.goal.type !== 'path') {
+      // For now, only support reach and path goals in grid runtime
+      set({ isRunning: false });
+      return false;
+    }
+
     const runtime = new Runtime({ goal: lesson.goal, maxInstructionsPerTick: 1, audio });
     runtime.load(program);
-    set({ _runtime: runtime, isRunning: true });
+    set({ _runtime: runtime, isRunning: true, visitedPath: [] });
 
     return new Promise<boolean>((resolve) => {
       const tick = () => {
@@ -149,17 +201,15 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
         if (!st) { set({ isRunning: false, _raf: undefined }); resolve(false); return; }
         st.step();
         const s = st.getState();
-        set({ pos: s.pos });
+        set({ pos: s.pos, visitedPath: s.visitedPath });
         if (s.running) {
-          // Add 200ms delay between steps for visibility
           const timeoutId = setTimeout(() => {
             const raf = requestAnimationFrame(tick);
             set({ _raf: raf });
           }, 200);
         } else {
-          const cleared = s.pos.x === lesson.goal.x && s.pos.y === lesson.goal.y;
+          const cleared = st.checkComplete();
           if (cleared && audio) {
-            // ゴール到達時の効果音
             audio.play('goal');
           }
           set({ isRunning: false, _raf: undefined, _runtime: undefined });
@@ -186,7 +236,7 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
         import('../audio/store').then(({ useAudioStore }) => {
           const muted = useAudioStore.getState().muted;
           const audio = muted ? undefined : createWebAudioSink();
-          const runtime = new Runtime({ goal: lesson.goal, maxInstructionsPerTick: 1, audio });
+          const runtime = new Runtime({ goal: lesson.goal as any, maxInstructionsPerTick: 1, audio });
           runtime.load(program);
           set({
             _runtime: runtime,
@@ -208,13 +258,14 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
     const state = runtime.getState();
     set({
       pos: state.pos,
+      visitedPath: state.visitedPath,
       currentStepIndex: get().currentStepIndex + 1,
       currentBlockIndex: state.currentBlockIndex
     });
 
     // Check if completed
     if (!state.running) {
-      const cleared = state.pos.x === lesson.goal.x && state.pos.y === lesson.goal.y;
+      const cleared = runtime.checkComplete();
       if (cleared) {
         import('../audio/sink').then(({ createWebAudioSink }) => {
           const audio = createWebAudioSink();

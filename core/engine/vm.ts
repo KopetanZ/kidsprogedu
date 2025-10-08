@@ -22,6 +22,7 @@ export type VMState = {
   frames: Frame[];
   executedThisTick: number;
   currentBlockIndex?: number; // Index of currently executing block in the program
+  visitedPath?: Position[]; // Track visited positions for path validation
 };
 
 export class VM {
@@ -42,6 +43,7 @@ export class VM {
       running: false,
       frames: [],
       executedThisTick: 0,
+      visitedPath: [clampToGrid(start, grid)], // Initialize with starting position
     };
   }
 
@@ -189,6 +191,12 @@ export class VM {
   private moveOnce(delta: { dx: number; dy: number }) {
     const next = { x: this.state.pos.x + delta.dx, y: this.state.pos.y + delta.dy };
     this.state.pos = clampToGrid(next, this.state.grid);
+
+    // Track visited position for path validation
+    if (this.state.visitedPath) {
+      this.state.visitedPath.push({ ...this.state.pos });
+    }
+
     this.state.executedThisTick += 1;
     // 移動時の効果音
     this.audio?.play('move');

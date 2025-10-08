@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useMemo } from 'react';
 import { useMobile } from '../hooks/useMobile';
+import PathDisplay from './PathDisplay';
 
 type Props = {
   width?: number;
@@ -11,9 +12,10 @@ type Props = {
   goal: { x: number; y: number };
   instruction?: string; // ゴール地点の吹き出しメッセージ
   direction?: 'right' | 'left' | 'up' | 'down'; // ネコの向き
+  visitedPath?: { x: number; y: number }[]; // Path tracking for visualization
 };
 
-export default function Stage({ width: propWidth, height: propHeight, gridW = 8, gridH = 5, pos, goal, instruction, direction = 'right' }: Props) {
+export default function Stage({ width: propWidth, height: propHeight, gridW = 8, gridH = 5, pos, goal, instruction, direction = 'right', visitedPath }: Props) {
   const isMobile = useMobile();
 
   // モバイルの場合は画面幅に合わせてサイズを調整
@@ -158,6 +160,23 @@ export default function Stage({ width: propWidth, height: propHeight, gridW = 8,
         }}
         aria-label="すてーじ"
       />
+
+      {/* Path visualization overlay */}
+      {visitedPath && visitedPath.length > 0 && (
+        <div style={{
+          position: 'absolute',
+          top: gridLayout.pad,
+          left: gridLayout.pad,
+          pointerEvents: 'none'
+        }}>
+          <PathDisplay
+            path={visitedPath}
+            gridWidth={gridW}
+            gridHeight={gridH}
+            cellSize={gridLayout.cellW}
+          />
+        </div>
+      )}
 
       {/* ゴール地点の吹き出し */}
       {instruction && (

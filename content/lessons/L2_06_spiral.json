@@ -1,15 +1,20 @@
 {
   "id": "L2_06_spiral",
   "title": "らせんで すすもう",
-  "goal": { "type": "reach", "x": 5, "y": 4 },
+  "goal": {
+    "type": "path",
+    "endPosition": { "x": 5, "y": 4 },
+    "pathPattern": "spiral"
+  },
   "toolbox": ["when_flag", "move_right", "move_up", "repeat_n"],
   "hints": [
     "みぎと うえを くりかえして つかうと らせんに なるよ",
-    "くりかえし3で みぎ うえ みぎ うえ みぎ うえ が できるよ"
+    "くりかえし3で みぎ うえ みぎ うえ みぎ うえ が できるよ",
+    "だんだん そとに ひろがる ように うごこう"
   ],
   "starterCode": [
     { "block": "when_flag" }
   ],
   "accept": { "maxBlocks": 4, "allowLinearSolution": true },
-  "instruction": "らせんで すすもう！🌀"
+  "instruction": "らせんの かたちで すすもう！🌀"
 }

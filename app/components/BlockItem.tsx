@@ -34,6 +34,18 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
         return `くりかえす ${b.n ?? 2}`;
       case 'play_sound':
         return 'おと';
+      case 'move_right_arm':
+        return `みぎて ${b.angle ?? 90}°`;
+      case 'move_left_arm':
+        return `ひだりて ${b.angle ?? 90}°`;
+      case 'move_right_leg':
+        return `みぎあし ${b.angle ?? 45}°`;
+      case 'move_left_leg':
+        return `ひだりあし ${b.angle ?? 45}°`;
+      case 'move_head':
+        return `あたま ${b.angle ?? 0}°`;
+      case 'pose_reset':
+        return 'リセット';
       default:
         return b.block;
     }
@@ -50,6 +62,13 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
         return '#FFE5CC'; // オレンジ系（制御）
       case 'play_sound':
         return '#D4F4DD'; // 緑系（音）
+      case 'move_right_arm':
+      case 'move_left_arm':
+      case 'move_right_leg':
+      case 'move_left_leg':
+      case 'move_head':
+      case 'pose_reset':
+        return '#FFD4E5'; // ピンク系（ダンス・表現）
       default:
         return '#E5EAF3';
     }
