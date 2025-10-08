@@ -14,6 +14,7 @@ import { useEditorStore } from '../../editor/store';
 import { useSaveStore } from '../../save/store';
 import { useTelemetry } from '../../telemetry/store';
 import { useAudioStore } from '../../audio/store';
+import { useMobile } from '../../hooks/useMobile';
 import type { Block } from '../../../core/blocks/schemas';
 import voice from '../../../content/voice/ja.json';
 
@@ -72,6 +73,7 @@ const createBlockFromToolbox = (id: string): Block[] => {
 function EditorInner() {
   const params = useSearchParams();
   const router = useRouter();
+  const isMobile = useMobile();
   const lessonId = params.get('lessonId') ?? 'L1_01_go_right';
   const lesson = lessonMap[lessonId];
   const { setLesson, program, addBlock, addBlockToRepeat, removeBlock, removeLast, undo, run, reset, hint, pos, hintText, runAnimated, isRunning } = useEditorStore();
@@ -196,10 +198,10 @@ function EditorInner() {
       }} />
 
       {/* Stage */}
-      <section style={{ padding: 16 }}>
+      <section style={{ padding: isMobile ? 12 : 16 }}>
         <Stage pos={pos} goal={lesson?.goal ?? { x: 4, y: 1 }} instruction={lesson?.instruction} />
         {hintText && (
-          <div style={{ marginTop: 8, fontSize: 18, color: '#1F2430' }}>{hintText}</div>
+          <div style={{ marginTop: 8, fontSize: isMobile ? 16 : 18, color: '#1F2430' }}>{hintText}</div>
         )}
       </section>
 
@@ -258,8 +260,8 @@ function EditorInner() {
 
       {/* Code lane (通常のdrillモード) */}
       {(!lesson?.type || lesson.type === 'drill') && (
-        <section style={{ padding: '8px 16px' }}>
-          <div style={{ fontSize: 18, margin: '8px 0' }}>こーど</div>
+        <section style={{ padding: isMobile ? '6px 12px' : '8px 16px' }}>
+          <div style={{ fontSize: isMobile ? 16 : 18, margin: isMobile ? '6px 0' : '8px 0' }}>こーど</div>
           <div
           onDragOver={(e) => {
             e.preventDefault();
@@ -273,15 +275,15 @@ function EditorInner() {
             setCodeLaneDragOver(false);
           }}
           style={{
-            height: 140,
-            borderRadius: 12,
+            height: isMobile ? 100 : 140,
+            borderRadius: isMobile ? 8 : 12,
             background: codeLaneDragOver ? '#E3F2FD' : '#fff',
             boxShadow: codeLaneDragOver ? 'inset 0 0 0 3px #4F8EF7' : 'inset 0 0 0 2px #E5EAF3',
             display: 'flex',
             alignItems: 'center',
             overflowX: 'auto',
-            gap: 8,
-            padding: 8,
+            gap: isMobile ? 6 : 8,
+            padding: isMobile ? 6 : 8,
             transition: 'background 0.2s, box-shadow 0.2s',
           }}>
           {program.map((b, i) => (
@@ -305,11 +307,11 @@ function EditorInner() {
 
       {/* Palette (drillモードのみ) */}
       {(!lesson?.type || lesson.type === 'drill') && (
-        <section style={{ padding: '8px 16px 24px' }}>
-          <div style={{ fontSize: 18, margin: '8px 0' }}>ぶろっく</div>
-          <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 8 }}>
+        <section style={{ padding: isMobile ? '6px 12px 16px' : '8px 16px 24px' }}>
+          <div style={{ fontSize: isMobile ? 16 : 18, margin: isMobile ? '6px 0' : '8px 0' }}>ぶろっく</div>
+          <div style={{ display: 'flex', gap: isMobile ? 6 : 8, overflowX: 'auto', paddingBottom: isMobile ? 6 : 8 }}>
             {palette.map((b, idx) => (
-              <BlockItem key={idx} block={b} onClick={() => addBlock(b)} isDraggable={true} />
+              <BlockItem key={idx} block={b} onClick={() => addBlock(b)} isDraggable={!isMobile} />
             ))}
           </div>
         </section>

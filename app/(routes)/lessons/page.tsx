@@ -5,12 +5,14 @@ import { useEffect } from 'react';
 import { lessons } from '../../../content/lessons';
 import { useSaveStore } from '../../save/store';
 import { useBadgeStore } from '../../badges/store';
+import { useMobile } from '../../hooks/useMobile';
 import BadgeNotification from '../../components/BadgeNotification';
 import SkillMap from '../../components/SkillMap';
 import type { Skill } from '../../../core/blocks/schemas';
 import voice from '../../../content/voice/ja.json';
 
 export default function LessonsPage() {
+  const isMobile = useMobile();
   const { load, clearIds } = useSaveStore();
   const { earnedBadges } = useBadgeStore();
 
@@ -102,34 +104,34 @@ export default function LessonsPage() {
   const skillProgress = calculateSkillProgress();
 
   return (
-    <main style={{ padding: 24, background: '#F5F7FB', minHeight: '100vh' }}>
+    <main style={{ padding: isMobile ? 12 : 24, background: '#F5F7FB', minHeight: '100vh' }}>
       <BadgeNotification />
 
       {/* ガイドヘッダー */}
       <div style={{
         background: '#fff',
-        borderRadius: 16,
-        padding: 24,
-        marginBottom: 32,
+        borderRadius: isMobile ? 12 : 16,
+        padding: isMobile ? 16 : 24,
+        marginBottom: isMobile ? 20 : 32,
         boxShadow: '0 2px 8px rgba(0,0,0,.08)',
       }}>
-        <h1 style={{ fontSize: 32, marginBottom: 12, color: '#1F2430' }}>
+        <h1 style={{ fontSize: isMobile ? 24 : 32, marginBottom: isMobile ? 8 : 12, color: '#1F2430' }}>
           {voice.lessons_guide.title}
         </h1>
-        <p style={{ fontSize: 20, color: '#666', marginBottom: 8 }}>
+        <p style={{ fontSize: isMobile ? 16 : 20, color: '#666', marginBottom: isMobile ? 6 : 8 }}>
           {voice.lessons_guide.subtitle}
         </p>
-        <p style={{ fontSize: 18, color: '#4F8EF7', fontWeight: 'bold' }}>
+        <p style={{ fontSize: isMobile ? 16 : 18, color: '#4F8EF7', fontWeight: 'bold' }}>
           ⭐ {voice.lessons_guide.recommended}
         </p>
         {/* バッジへのリンク */}
         <Link href="/badges">
           <button
             style={{
-              marginTop: 16,
-              padding: '8px 20px',
-              fontSize: 18,
-              borderRadius: 12,
+              marginTop: isMobile ? 12 : 16,
+              padding: isMobile ? '6px 16px' : '8px 20px',
+              fontSize: isMobile ? 16 : 18,
+              borderRadius: isMobile ? 8 : 12,
               border: '2px solid #4F8EF7',
               background: '#fff',
               color: '#4F8EF7',
@@ -153,27 +155,27 @@ export default function LessonsPage() {
         const { cleared, total } = getClearCount(group.level);
 
         return (
-          <section key={group.level} style={{ marginBottom: 32 }}>
+          <section key={group.level} style={{ marginBottom: isMobile ? 20 : 32 }}>
             {/* セクションヘッダー */}
             <div style={{
               background: group.color,
-              borderRadius: 12,
-              padding: 16,
-              marginBottom: 16,
+              borderRadius: isMobile ? 8 : 12,
+              padding: isMobile ? 12 : 16,
+              marginBottom: isMobile ? 12 : 16,
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-              <h2 style={{ fontSize: 24, margin: 0, color: '#1F2430' }}>
+              <h2 style={{ fontSize: isMobile ? 18 : 24, margin: 0, color: '#1F2430' }}>
                 {group.title}
               </h2>
-              <div style={{ fontSize: 18, fontWeight: 'bold', color: '#4F8EF7' }}>
-                {cleared}/{total} クリア！
+              <div style={{ fontSize: isMobile ? 16 : 18, fontWeight: 'bold', color: '#4F8EF7' }}>
+                {cleared}/{total}
               </div>
             </div>
 
             {/* レッスンカード */}
-            <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+            <div style={{ display: 'grid', gap: isMobile ? 12 : 16, gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(240px, 1fr))' }}>
               {levelLessons.map((l) => {
                 const isCleared = clearIds.includes(l.id);
                 const isNext = l.id === nextLessonId;

@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import type { Block } from '../../core/blocks/schemas';
+import { useMobile } from '../hooks/useMobile';
 
 type Props = {
   block: Block;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export default function BlockItem({ block, onClick, onRemove, showRemove = false, onDropToRepeat, isDraggable = false, onDrop, index }: Props) {
+  const isMobile = useMobile();
   const [isDragOver, setIsDragOver] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
   const labelOf = (b: Block): string => {
@@ -58,20 +60,20 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
     return (
       <div
         style={{
-          minWidth: 140,
-          borderRadius: 12,
+          minWidth: isMobile ? 100 : 140,
+          borderRadius: isMobile ? 8 : 12,
           background: colorOf(block),
           color: '#1F2430',
           position: 'relative',
-          padding: 8,
+          padding: isMobile ? 6 : 8,
         }}
       >
         {/* ヘッダー */}
         <div
           style={{
-            fontSize: 18,
+            fontSize: isMobile ? 16 : 18,
             fontWeight: 'bold',
-            marginBottom: 8,
+            marginBottom: isMobile ? 6 : 8,
             textAlign: 'center',
           }}
         >
@@ -178,9 +180,9 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
   return (
     <div
       onClick={onClick}
-      draggable={isDraggable}
+      draggable={!isMobile && isDraggable}
       onDragStart={(e) => {
-        if (isDraggable) {
+        if (!isMobile && isDraggable) {
           setIsDragging(true);
           e.dataTransfer.effectAllowed = 'copy';
           e.dataTransfer.setData('application/json', JSON.stringify(block));
@@ -190,21 +192,23 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
         setIsDragging(false);
       }}
       style={{
-        minWidth: 120,
-        height: 56,
-        borderRadius: 12,
+        minWidth: isMobile ? 90 : 120,
+        height: isMobile ? 48 : 56,
+        borderRadius: isMobile ? 8 : 12,
         background: colorOf(block),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         color: '#1F2430',
-        fontSize: 18,
+        fontSize: isMobile ? 16 : 18,
         cursor: onClick || isDraggable ? 'pointer' : 'default',
         position: 'relative',
-        padding: '0 8px',
+        padding: isMobile ? '0 6px' : '0 8px',
         transform: isDragging ? 'scale(1.1)' : 'scale(1)',
         transition: 'transform 0.2s ease-out',
         opacity: isDragging ? 0.8 : 1,
+        touchAction: isMobile ? 'manipulation' : 'auto',
+        WebkitTapHighlightColor: 'transparent',
       }}
     >
       {labelOf(block)}

@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import Button from './Button';
+import { useMobile } from '../hooks/useMobile';
 
 type Props = {
   onRun?: () => void;
@@ -12,6 +13,8 @@ type Props = {
 };
 
 export default function TopBar({ onRun, onReset, onHint, onGuide, muted, onToggleMute }: Props) {
+  const isMobile = useMobile();
+
   return (
     <div
       style={{
@@ -19,9 +22,10 @@ export default function TopBar({ onRun, onReset, onHint, onGuide, muted, onToggl
         top: 0,
         display: 'flex',
         justifyContent: 'flex-end',
-        gap: 12,
-        padding: 12,
+        gap: isMobile ? 8 : 12,
+        padding: isMobile ? 8 : 12,
         background: '#F5F7FB',
+        zIndex: 100,
       }}
     >
       <Button aria-label={muted ? "おと きる" : "おと だす"} variant="ghost" onClick={onToggleMute}>

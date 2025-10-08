@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useMemo } from 'react';
+import { useMobile } from '../hooks/useMobile';
 
 type Props = {
   width?: number;
@@ -12,7 +13,12 @@ type Props = {
   direction?: 'right' | 'left' | 'up' | 'down'; // ネコの向き
 };
 
-export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5, pos, goal, instruction, direction = 'right' }: Props) {
+export default function Stage({ width: propWidth, height: propHeight, gridW = 8, gridH = 5, pos, goal, instruction, direction = 'right' }: Props) {
+  const isMobile = useMobile();
+
+  // モバイルの場合は画面幅に合わせてサイズを調整
+  const width = propWidth ?? (isMobile ? Math.min(window.innerWidth - 32, 600) : 960);
+  const height = propHeight ?? (isMobile ? Math.floor(width * 0.4) : 380);
   const ref = useRef<HTMLCanvasElement | null>(null);
   const rafRef = useRef<number | undefined>(undefined);
   const prevPosRef = useRef(pos);
@@ -158,16 +164,16 @@ export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5,
         <div style={{
           position: 'absolute',
           left: `${gridLayout.pad + (goal.x - 0.5) * gridLayout.cellW + gridLayout.cellW * 0.7}px`,
-          top: `${gridLayout.pad + (goal.y - 0.5) * gridLayout.cellH - 70}px`,
+          top: `${gridLayout.pad + (goal.y - 0.5) * gridLayout.cellH - (isMobile ? 50 : 70)}px`,
           background: '#fff',
-          border: '3px solid #4F8EF7',
-          borderRadius: 16,
-          padding: '8px 16px',
-          fontSize: 16,
+          border: isMobile ? '2px solid #4F8EF7' : '3px solid #4F8EF7',
+          borderRadius: isMobile ? 12 : 16,
+          padding: isMobile ? '6px 12px' : '8px 16px',
+          fontSize: isMobile ? 14 : 16,
           fontWeight: 'bold',
           color: '#1F2430',
           boxShadow: '0 4px 12px rgba(0,0,0,.15)',
-          maxWidth: 200,
+          maxWidth: isMobile ? 150 : 200,
           pointerEvents: 'none',
           zIndex: 10,
           opacity: showInstruction ? 1 : 0,
@@ -178,23 +184,23 @@ export default function Stage({ width = 960, height = 380, gridW = 8, gridH = 5,
           {/* 吹き出しの三角形 */}
           <div style={{
             position: 'absolute',
-            bottom: -10,
-            left: 20,
+            bottom: isMobile ? -8 : -10,
+            left: isMobile ? 15 : 20,
             width: 0,
             height: 0,
-            borderLeft: '10px solid transparent',
-            borderRight: '10px solid transparent',
-            borderTop: '10px solid #4F8EF7',
+            borderLeft: isMobile ? '8px solid transparent' : '10px solid transparent',
+            borderRight: isMobile ? '8px solid transparent' : '10px solid transparent',
+            borderTop: isMobile ? '8px solid #4F8EF7' : '10px solid #4F8EF7',
           }} />
           <div style={{
             position: 'absolute',
-            bottom: -6,
-            left: 22,
+            bottom: isMobile ? -5 : -6,
+            left: isMobile ? 17 : 22,
             width: 0,
             height: 0,
-            borderLeft: '8px solid transparent',
-            borderRight: '8px solid transparent',
-            borderTop: '8px solid #fff',
+            borderLeft: isMobile ? '6px solid transparent' : '8px solid transparent',
+            borderRight: isMobile ? '6px solid transparent' : '8px solid transparent',
+            borderTop: isMobile ? '6px solid #fff' : '8px solid #fff',
           }} />
         </div>
       )}
