@@ -40,7 +40,6 @@
     "content",
     "core",
     "docs",
-    "scripts",
     "test",
     ".next/types/**/*.ts"
   ],

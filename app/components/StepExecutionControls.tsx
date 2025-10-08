@@ -82,7 +82,6 @@ export default function StepExecutionControls({
           style={{
             padding: '12px',
             fontSize: 20,
-            border: 'none',
             borderRadius: 8,
             background: currentStep === 0 ? '#E5EAF3' : '#fff',
             border: '2px solid #E5EAF3',
@@ -118,7 +117,6 @@ export default function StepExecutionControls({
           style={{
             padding: '12px',
             fontSize: 20,
-            border: 'none',
             borderRadius: 8,
             background: currentStep >= totalSteps ? '#E5EAF3' : '#fff',
             border: '2px solid #E5EAF3',
