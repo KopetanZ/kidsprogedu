@@ -13,6 +13,13 @@ export const BlockId = z.enum([
   'set_var',      // 変数を設定
   'change_var',   // 変数を変更
   'repeat_var',   // 変数で繰り返し
+  // Dance/Robot blocks
+  'move_right_arm',  // 右手を動かす
+  'move_left_arm',   // 左手を動かす
+  'move_right_leg',  // 右足を動かす
+  'move_left_leg',   // 左足を動かす
+  'move_head',       // 頭を動かす
+  'pose_reset',      // ポーズをリセット
 ]);
 
 export type BlockId = z.infer<typeof BlockId>;
@@ -27,14 +34,40 @@ export const BlockSchema: z.ZodType<any> = z.lazy(() =>
     // 変数関連
     varName: z.string().optional(), // 変数名
     varValue: z.number().optional(), // 変数の値
+    // Dance/Animation関連
+    angle: z.number().optional(), // 角度（度数法）
+    duration: z.number().optional(), // アニメーション時間 (ms)
   })
 );
 
-export const GoalSchema = z.object({
-  type: z.literal('reach'),
-  x: z.number().int().min(1).max(8),
-  y: z.number().int().min(1).max(5),
-});
+export const GoalSchema = z.discriminatedUnion('type', [
+  // 通常のゴール到達型
+  z.object({
+    type: z.literal('reach'),
+    x: z.number().int().min(1).max(8),
+    y: z.number().int().min(1).max(5),
+  }),
+  // ダンス型（自由な動作）
+  z.object({
+    type: z.literal('dance'),
+    minMoves: z.number().int().min(1).default(5), // 最低限必要な動作数
+    requireSound: z.boolean().default(false), // 音も必要か
+  }),
+  // 経路型（特定の経路を通る）
+  z.object({
+    type: z.literal('path'),
+    endPosition: z.object({
+      x: z.number().int().min(1).max(8),
+      y: z.number().int().min(1).max(5),
+    }),
+    requiredPath: z.array(z.object({
+      x: z.number().int().min(1).max(8),
+      y: z.number().int().min(1).max(5),
+    })).optional(),
+    pathPattern: z.enum(['spiral', 'zigzag', 'square', 'custom']).optional(),
+    minPathLength: z.number().int().optional(),
+  }),
+]);
 
 export const AcceptSchema = z
   .object({
@@ -45,7 +78,7 @@ export const AcceptSchema = z
   .optional();
 
 // レッスンタイプ
-export const LessonTypeEnum = z.enum(['drill', 'parsons', 'debug', 'challenge', 'project']);
+export const LessonTypeEnum = z.enum(['drill', 'parsons', 'debug', 'challenge', 'project', 'dance']);
 export type LessonType = z.infer<typeof LessonTypeEnum>;
 
 // スキル定義
