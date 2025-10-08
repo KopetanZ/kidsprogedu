@@ -260,7 +260,7 @@ function EditorInner() {
       {(!lesson?.type || lesson.type === 'drill') && (
         <section style={{ padding: '8px 16px' }}>
           <div style={{ fontSize: 18, margin: '8px 0' }}>こーど</div>
-        <div
+          <div
           onDragOver={(e) => {
             e.preventDefault();
             setCodeLaneDragOver(true);
@@ -300,7 +300,8 @@ function EditorInner() {
             ⟲
           </Button>
         </div>
-      </section>
+        </section>
+      )}
 
       {/* Palette (drillモードのみ) */}
       {(!lesson?.type || lesson.type === 'drill') && (
