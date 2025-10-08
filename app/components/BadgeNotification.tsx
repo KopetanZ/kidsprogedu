@@ -13,6 +13,7 @@ export default function BadgeNotification() {
     if (newBadges.length > 0 && !currentBadge) {
       // 新しいバッジを表示
       const badgeId = newBadges[0];
+      if (!badgeId) return;
       setCurrentBadge(badgeId);
       setShow(true);
 
