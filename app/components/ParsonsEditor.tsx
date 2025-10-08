@@ -29,6 +29,7 @@ export default function ParsonsEditor({ fragments, correctOrder, onCheck, onComp
 
   const moveToWork = (index: number) => {
     const item = palette[index];
+    if (!item) return;
     setWorkArea([...workArea, item]);
     setPalette(palette.filter((_, i) => i !== index));
     setFeedback(null);
@@ -36,6 +37,7 @@ export default function ParsonsEditor({ fragments, correctOrder, onCheck, onComp
 
   const moveToPalette = (index: number) => {
     const item = workArea[index];
+    if (!item) return;
     setPalette([...palette, item]);
     setWorkArea(workArea.filter((_, i) => i !== index));
     setFeedback(null);
