@@ -12,9 +12,10 @@ type Props = {
   isDraggable?: boolean;
   onDrop?: (droppedBlock: Block) => void;
   index?: number;
+  isCurrentBlock?: boolean; // For step execution highlighting
 };
 
-export default function BlockItem({ block, onClick, onRemove, showRemove = false, onDropToRepeat, isDraggable = false, onDrop, index }: Props) {
+export default function BlockItem({ block, onClick, onRemove, showRemove = false, onDropToRepeat, isDraggable = false, onDrop, index, isCurrentBlock = false }: Props) {
   const isMobile = useMobile();
   const [isDragOver, setIsDragOver] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
@@ -66,6 +67,8 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
           color: '#1F2430',
           position: 'relative',
           padding: isMobile ? 6 : 8,
+          boxShadow: isCurrentBlock ? '0 0 0 3px #4F8EF7' : 'none',
+          transition: 'box-shadow 0.3s',
         }}
       >
         {/* ヘッダー */}
@@ -205,10 +208,11 @@ export default function BlockItem({ block, onClick, onRemove, showRemove = false
         position: 'relative',
         padding: isMobile ? '0 6px' : '0 8px',
         transform: isDragging ? 'scale(1.1)' : 'scale(1)',
-        transition: 'transform 0.2s ease-out',
+        transition: 'transform 0.2s ease-out, box-shadow 0.3s',
         opacity: isDragging ? 0.8 : 1,
         touchAction: isMobile ? 'manipulation' : 'auto',
         WebkitTapHighlightColor: 'transparent',
+        boxShadow: isCurrentBlock ? '0 0 0 3px #4F8EF7' : 'none',
       }}
     >
       {labelOf(block)}

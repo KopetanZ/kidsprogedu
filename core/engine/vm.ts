@@ -21,6 +21,7 @@ export type VMState = {
   running: boolean;
   frames: Frame[];
   executedThisTick: number;
+  currentBlockIndex?: number; // Index of currently executing block in the program
 };
 
 export class VM {

@@ -8,6 +8,10 @@ type EditorState = {
   program: Block[];
   history: Block[][];
   isRunning: boolean;
+  isStepMode: boolean;
+  isPaused: boolean;
+  currentStepIndex: number;
+  currentBlockIndex?: number;
   pos: { x: number; y: number };
   hintText?: string;
   _raf?: number;
@@ -22,6 +26,12 @@ type EditorState = {
   reset: () => void;
   run: () => boolean; // returns cleared?
   runAnimated: () => Promise<boolean>;
+  startStepMode: () => void;
+  stepNext: () => void;
+  stepPrevious: () => void;
+  pauseStep: () => void;
+  resumeStep: () => void;
+  stopStepMode: () => void;
   hint: (text: string) => void;
 };
 
@@ -29,6 +39,9 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
   program: [],
   history: [],
   isRunning: false,
+  isStepMode: false,
+  isPaused: false,
+  currentStepIndex: 0,
   pos: { x: 1, y: 1 },
   setLesson(lesson) {
     set({ lesson, program: lesson.starterCode.slice(), pos: { x: 1, y: 1 } });
@@ -160,5 +173,96 @@ export const useEditorStore = create<EditorState>()((set, get) => ({
   hint(text) {
     set({ hintText: text });
     setTimeout(() => set({ hintText: undefined }), 3000);
+  },
+  startStepMode() {
+    const lesson = get().lesson;
+    if (!lesson) return;
+
+    const program: Block[] = [{ block: 'when_flag' }, ...get().program.filter((b) => b.block !== 'when_flag')];
+
+    // Create runtime with step mode (1 instruction per tick)
+    import('../../core/engine/runtime').then(({ Runtime }) => {
+      import('../audio/sink').then(({ createWebAudioSink }) => {
+        import('../audio/store').then(({ useAudioStore }) => {
+          const muted = useAudioStore.getState().muted;
+          const audio = muted ? undefined : createWebAudioSink();
+          const runtime = new Runtime({ goal: lesson.goal, maxInstructionsPerTick: 1, audio });
+          runtime.load(program);
+          set({
+            _runtime: runtime,
+            isStepMode: true,
+            isPaused: true,
+            currentStepIndex: 0,
+            pos: { x: 1, y: 1 }
+          });
+        });
+      });
+    });
+  },
+  stepNext() {
+    const runtime = get()._runtime;
+    const lesson = get().lesson;
+    if (!runtime || !lesson) return;
+
+    runtime.step();
+    const state = runtime.getState();
+    set({
+      pos: state.pos,
+      currentStepIndex: get().currentStepIndex + 1,
+      currentBlockIndex: state.currentBlockIndex
+    });
+
+    // Check if completed
+    if (!state.running) {
+      const cleared = state.pos.x === lesson.goal.x && state.pos.y === lesson.goal.y;
+      if (cleared) {
+        import('../audio/sink').then(({ createWebAudioSink }) => {
+          const audio = createWebAudioSink();
+          audio.play('goal');
+        });
+      }
+      set({ isStepMode: false, _runtime: undefined, currentBlockIndex: undefined });
+    }
+  },
+  stepPrevious() {
+    // For simplicity, restart and replay to previous step
+    const currentIndex = get().currentStepIndex;
+    if (currentIndex <= 0) return;
+
+    get().startStepMode();
+
+    // Execute steps up to currentIndex - 1
+    setTimeout(() => {
+      for (let i = 0; i < currentIndex - 1; i++) {
+        get().stepNext();
+      }
+    }, 100);
+  },
+  pauseStep() {
+    set({ isPaused: true });
+  },
+  resumeStep() {
+    set({ isPaused: false });
+    // Continue stepping automatically
+    const autoStep = () => {
+      if (!get().isPaused && get().isStepMode) {
+        get().stepNext();
+        if (get().isStepMode) {
+          setTimeout(autoStep, 500);
+        }
+      }
+    };
+    setTimeout(autoStep, 500);
+  },
+  stopStepMode() {
+    const raf = get()._raf;
+    if (raf) cancelAnimationFrame(raf);
+    set({
+      isStepMode: false,
+      isPaused: false,
+      currentStepIndex: 0,
+      _runtime: undefined,
+      pos: { x: 1, y: 1 }
+    });
   },
 }));

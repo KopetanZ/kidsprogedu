@@ -9,6 +9,7 @@ import SubgoalList from '../../components/SubgoalList';
 import ParsonsEditor from '../../components/ParsonsEditor';
 import DebugEditor from '../../components/DebugEditor';
 import ChallengeConstraints from '../../components/ChallengeConstraints';
+import StepExecutionControls from '../../components/StepExecutionControls';
 import { lessonMap } from '../../../content/lessons';
 import { useEditorStore } from '../../editor/store';
 import { useSaveStore } from '../../save/store';
@@ -76,7 +77,7 @@ function EditorInner() {
   const isMobile = useMobile();
   const lessonId = params.get('lessonId') ?? 'L1_01_go_right';
   const lesson = lessonMap[lessonId];
-  const { setLesson, program, addBlock, addBlockToRepeat, removeBlock, removeLast, undo, run, reset, hint, pos, hintText, runAnimated, isRunning } = useEditorStore();
+  const { setLesson, program, addBlock, addBlockToRepeat, removeBlock, removeLast, undo, run, reset, hint, pos, hintText, runAnimated, isRunning, isStepMode, isPaused, currentStepIndex, currentBlockIndex, startStepMode, stepNext, stepPrevious, pauseStep, resumeStep, stopStepMode } = useEditorStore();
   const { startLesson, runPressed, hintTap, clearLesson } = useTelemetry();
   const saveStore = useSaveStore;
   const { muted, toggle } = useAudioStore();
@@ -135,7 +136,7 @@ function EditorInner() {
 
   return (
     <main style={{ background: '#F5F7FB', minHeight: '100vh' }}>
-      <TopBar muted={muted} onToggleMute={toggle} onGuide={showGuideAgain} onRun={async () => {
+      <TopBar muted={muted} onToggleMute={toggle} onGuide={showGuideAgain} onStepMode={startStepMode} onRun={async () => {
         if (!lesson) return;
 
         // ブロック0個チェック
@@ -258,6 +259,23 @@ function EditorInner() {
         </section>
       )}
 
+      {/* Step Execution Controls */}
+      {isStepMode && (
+        <section style={{ padding: isMobile ? '6px 12px' : '8px 16px' }}>
+          <StepExecutionControls
+            isRunning={isStepMode}
+            isPaused={isPaused}
+            currentStep={currentStepIndex}
+            totalSteps={program.length}
+            onStepForward={stepNext}
+            onStepBackward={stepPrevious}
+            onPlay={resumeStep}
+            onPause={pauseStep}
+            onReset={stopStepMode}
+          />
+        </section>
+      )}
+
       {/* Code lane (通常のdrillモード) */}
       {(!lesson?.type || lesson.type === 'drill') && (
         <section style={{ padding: isMobile ? '6px 12px' : '8px 16px' }}>
@@ -293,6 +311,7 @@ function EditorInner() {
               showRemove={true}
               onRemove={() => removeBlock(i)}
               onDropToRepeat={b.block === 'repeat_n' ? (child) => addBlockToRepeat(i, child) : undefined}
+              isCurrentBlock={isStepMode && currentBlockIndex === i}
             />
           ))}
           <Button aria-label="けす" variant="ghost" onClick={removeLast}>

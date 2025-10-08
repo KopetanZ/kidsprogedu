@@ -8,11 +8,12 @@ type Props = {
   onReset?: () => void;
   onHint?: () => void;
   onGuide?: () => void;
+  onStepMode?: () => void;
   muted?: boolean;
   onToggleMute?: () => void;
 };
 
-export default function TopBar({ onRun, onReset, onHint, onGuide, muted, onToggleMute }: Props) {
+export default function TopBar({ onRun, onReset, onHint, onGuide, onStepMode, muted, onToggleMute }: Props) {
   const isMobile = useMobile();
 
   return (
@@ -40,6 +41,11 @@ export default function TopBar({ onRun, onReset, onHint, onGuide, muted, onToggl
       {onGuide && (
         <Button aria-label="つかいかた" variant="ghost" onClick={onGuide}>
           📖
+        </Button>
+      )}
+      {onStepMode && (
+        <Button aria-label="ステップじっこう" variant="ghost" onClick={onStepMode}>
+          🎮
         </Button>
       )}
       <Button aria-label="じっこう" onClick={onRun}>
